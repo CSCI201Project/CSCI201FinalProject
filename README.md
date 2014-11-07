@@ -2,6 +2,8 @@ CSCI201FinalProject
 ===================
 
 Team Members
+============
+
 Christan Carter
 Brian Nutt
 Anthongy Asuquo
