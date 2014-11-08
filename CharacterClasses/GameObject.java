@@ -1,9 +1,18 @@
 package project;
 
+import java.awt.Graphics;
+import java.util.Vector;
+
 public abstract class GameObject {
 	protected double x, y;
-	protected double velX, velY;
+	protected double velX = 0, velY = 0;
+	public static final int ZOMBIE = 0;
+	public static final int SURVIVOR = 1;
+	public static final int WEAPON = 2;
+	public static final int OTHER = 3;
 	
+	public abstract void render(Graphics g);
+	public abstract void update(Vector<GameObject> objects);
 	public void setX(double x){
 		this.x = x;
 	}
