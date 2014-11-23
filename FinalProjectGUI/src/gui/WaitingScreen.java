@@ -43,7 +43,6 @@ public class WaitingScreen extends JFrame{
 	    playButton = new JButton("Play");
 		playButton.setFont(new Font("Times New Roman",Font.BOLD,48));
 		playButton.setBounds(300, 0, 200, 75);
-		playButton.setOpaque(false);
 		playButton.addActionListener(new ActionListener(){
 
 			@Override
@@ -105,8 +104,19 @@ public class WaitingScreen extends JFrame{
 		 } 
 		 panel.add(connectedPlayersPanel);
 		 
-		 
-		 
+		 /*Quit Button*/
+		 JButton quitButton = new JButton("Quit");
+		 quitButton.setFont(new Font("Times New Roman",Font.BOLD,48));
+		 quitButton.setBounds(310, 450, 200, 75);
+		 quitButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				/*If quit is pressed, disconnect, exit program*/
+				System.exit(0);
+				
+			}
+		 });
+		 panel.add(quitButton);
 		 
 		return panel;
 	}
