@@ -2,8 +2,14 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class ConnectScreen extends JFrame {
 
@@ -24,6 +30,7 @@ public class ConnectScreen extends JFrame {
 		this.setVisible(true);
 	}
 	
+	/*Set's up the GUI and returns the panel holding the components*/
 	public JPanel setupGUI(){
 		PanelBackground panel = new PanelBackground(0);
 		panel.setLayout(null);
@@ -75,8 +82,43 @@ public class ConnectScreen extends JFrame {
 		portLabel.setBounds(420, 400, 50, 25);
 		panel.add(portLabel);
 		
+		/*Port Text Field*/
+		JTextField portTextField = new JTextField(10);
+		portTextField.setBounds(475, 400, 50, 25);
+		panel.add(portTextField);
+		/*THIS WILL BE NEEDED LATER ON*/
 		
+		/*Connect Button*/
+		JButton connectButton = new JButton("Connect");
+		connectButton.setFont(new Font("Times New Roman",Font.BOLD,32));
+		connectButton.setBounds(275, 500, 125, 45);
+		connectButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//CODE TO CONNECT TO SERVER GOES HERE
+				
+			}
+			
+		});
+		panel.add(connectButton);
+		/*THIS WILL BE NEEDED LATER ON*/
 		
+		/*Quit Button*/
+		JButton quitButton = new JButton("Quit");
+		quitButton.setFont(new Font("Times New Roman",Font.BOLD,32));
+		quitButton.setBounds(405, 500, 125, 45);
+		quitButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//QUIT GAME IF BUTTON IS PRESSED
+				System.exit(0);
+			}
+			
+		});
+		panel.add(quitButton);
+
 		return panel;
 	}
 	
