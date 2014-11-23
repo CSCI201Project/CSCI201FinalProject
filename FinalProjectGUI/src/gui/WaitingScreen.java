@@ -47,7 +47,7 @@ public class WaitingScreen extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Start gamex
+				//Start game
 				
 			}
 			
