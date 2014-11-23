@@ -25,11 +25,12 @@ public class PanelBackground extends JPanel {
 		 */
 		switch(backGroundNumber){
 		case 0:
-		    ImageIcon backGround = new ImageIcon("bloodWallPaper.jpg");
-			this.setBackGround(backGround);
+		    ImageIcon loginBackground = new ImageIcon("bloodWallPaper.jpg");
+			this.setBackGround(loginBackground);
 			break;
 		case 1:
-			
+			ImageIcon waitingScreenBackGround = new ImageIcon("darkForest.jpg");
+			this.setBackGround(waitingScreenBackGround);
 			break;
 		case 2:
 			

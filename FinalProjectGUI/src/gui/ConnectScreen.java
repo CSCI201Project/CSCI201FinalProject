@@ -21,12 +21,14 @@ public class ConnectScreen extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 8718869258020517546L;
-
+	
+	private JTextField playerNameTextField;
+	private JTextField ipAddressTextField;
+	private JTextField portTextField;
 
 	public ConnectScreen(){
-		this.setTitle("Connect Screen");
+		super("Connect Screen");
 		this.setSize(800, 600);
-		///this.setLayout(null);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -72,7 +74,7 @@ public class ConnectScreen extends JFrame {
 		panel.add(enterNameLabel);
 		
 		/*Textfield for player to enter their name*/
-		JTextField playerNameTextField = new JTextField(50);
+	    playerNameTextField = new JTextField(50);
 		playerNameTextField.setBounds(405, 250, 150, 25);
 		panel.add(playerNameTextField);
 		/*THIS WILL BE NEEDED LATER ON*/
@@ -85,7 +87,7 @@ public class ConnectScreen extends JFrame {
 		panel.add(ipAddressLabel);
 	
 		/*IP Address TextField*/
-		JTextField ipAddressTextField = new JTextField(20);
+	    ipAddressTextField = new JTextField(20);
 		ipAddressTextField.setBounds(305, 400, 110, 25);
 		panel.add(ipAddressTextField);
 		/*THIS WILL BE NEEDED LATER ON*/
@@ -98,7 +100,7 @@ public class ConnectScreen extends JFrame {
 		panel.add(portLabel);
 		
 		/*Port Text Field*/
-		JTextField portTextField = new JTextField(10);
+	    portTextField = new JTextField(10);
 		portTextField.setBounds(475, 400, 50, 25);
 		panel.add(portTextField);
 		/*THIS WILL BE NEEDED LATER ON*/
