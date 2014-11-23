@@ -28,13 +28,19 @@ public class ConnectScreen extends JFrame {
 		PanelBackground panel = new PanelBackground(0);
 		panel.setLayout(null);
 		
-		
+		/*Game Title*/
 		JLabel titleLabel = new JLabel("Game Title");
 		titleLabel.setForeground(Color.WHITE);
 		titleLabel.setFont(new Font("Times New Roman",Font.BOLD,48));
 		titleLabel.setBounds(280, 0, 300, 50);
 		panel.add(titleLabel);
 		
+		/*Welcome Player Label*/
+		JLabel welcomeLabel = new JLabel("Welcome to our game!");
+		welcomeLabel.setForeground(Color.WHITE);
+		welcomeLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
+		welcomeLabel.setBounds(250, 0, 330, 250);
+		panel.add(welcomeLabel);
 		
 		
 		return panel;
