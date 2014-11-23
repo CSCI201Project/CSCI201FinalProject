@@ -59,8 +59,23 @@ public class ConnectScreen extends JFrame {
 		JLabel ipAddressLabel = new JLabel("IP:");
 		ipAddressLabel.setForeground(Color.WHITE);
 		ipAddressLabel.setFont(new Font("Times New Roman",Font.BOLD,16));
-		ipAddressLabel.setBounds(275, 400, 150, 25);
+		ipAddressLabel.setBounds(275, 400, 25, 25);
 		panel.add(ipAddressLabel);
+	
+		/*IP Address TextField*/
+		JTextField ipAddressTextField = new JTextField(20);
+		ipAddressTextField.setBounds(305, 400, 110, 25);
+		panel.add(ipAddressTextField);
+		/*THIS WILL BE NEEDED LATER ON*/
+		
+		/*Port Address Label*/
+		JLabel portLabel = new JLabel("Port:");
+		portLabel.setForeground(Color.WHITE);
+		portLabel.setFont(new Font("Times New Roman",Font.BOLD,16));
+		portLabel.setBounds(420, 400, 50, 25);
+		panel.add(portLabel);
+		
+		
 		
 		return panel;
 	}
