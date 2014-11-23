@@ -46,11 +46,21 @@ public class ConnectScreen extends JFrame {
 		JLabel enterNameLabel = new JLabel("Enter your name:");
 		enterNameLabel.setForeground(Color.WHITE);
 		enterNameLabel.setFont(new Font("Times New Roman",Font.BOLD,16));
-		enterNameLabel.setBounds(220, 150, 150, 250);
+		enterNameLabel.setBounds(250, 250, 150, 25);
 		panel.add(enterNameLabel);
 		
+		/*Textfield for player to enter their name*/
+		JTextField playerNameTextField = new JTextField(50);
+		playerNameTextField.setBounds(405, 250, 150, 25);
+		panel.add(playerNameTextField);
+		/*THIS WILL BE NEEDED LATER ON*/
 		
-		
+		/*IP Address Label*/
+		JLabel ipAddressLabel = new JLabel("IP:");
+		ipAddressLabel.setForeground(Color.WHITE);
+		ipAddressLabel.setFont(new Font("Times New Roman",Font.BOLD,16));
+		ipAddressLabel.setBounds(275, 400, 150, 25);
+		panel.add(ipAddressLabel);
 		
 		return panel;
 	}
