@@ -5,10 +5,15 @@ Team Members
 ============
 
 Christan Carter
+
 Brian Nutt
-Anthongy Asuquo
+
+Anthony Asuquo
+
 Garv Manocha
+
 Darrin Chao
+
 Ryan Lu
 
 Final Project for USC CSCI 201
