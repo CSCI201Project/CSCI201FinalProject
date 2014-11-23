@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,6 +32,17 @@ public class ConnectScreen extends JFrame {
 		
 		this.add(setupGUI());
 		this.setVisible(true);
+		
+		try{
+			 AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("swamp.wav"));
+		        Clip clip = AudioSystem.getClip();
+		        clip.open(inputStream);
+		        clip.loop(Clip.LOOP_CONTINUOUSLY);
+		        Thread.sleep(10000); // looping as long as this thread is alive
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	/*Set's up the GUI and returns the panel holding the components*/
@@ -125,5 +140,9 @@ public class ConnectScreen extends JFrame {
 	
 	public static void main(String [] args){
 		new ConnectScreen();
+		
+		
+			
+		
 	}
 }
