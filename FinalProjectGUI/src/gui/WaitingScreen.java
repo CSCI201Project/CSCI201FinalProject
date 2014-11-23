@@ -95,18 +95,17 @@ public class WaitingScreen extends JFrame{
 		 connectedPlayersPanel = new JPanel();
 		 connectedPlayersPanel.setLayout(new BoxLayout(this.connectedPlayersPanel,BoxLayout.Y_AXIS));
 		 connectedPlayersPanel.setOpaque(false);
-		 connectedPlayersPanel.setBounds(300, 300, 250, 100);
+		 connectedPlayersPanel.setBounds(300, 300, 400, 100);
 		 /*FILLER CONNECTED PLAYERS LIST FOR TESTING*/
 		 for(int i = 1; i <=4; i++){
 			 JLabel label = new JLabel("Player " + i + " IP: 192.168.1.10" + i);
 			 label.setForeground(Color.WHITE);
 			 label.setFont(new Font("Times New Roman",Font.BOLD,20));
 			 connectedPlayersPanel.add(label);
-		 }
-		 
-		 
-		 
+		 } 
 		 panel.add(connectedPlayersPanel);
+		 
+		 
 		 
 		 
 		return panel;
