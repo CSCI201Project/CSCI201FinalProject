@@ -39,8 +39,17 @@ public class ConnectScreen extends JFrame {
 		JLabel welcomeLabel = new JLabel("Welcome to our game!");
 		welcomeLabel.setForeground(Color.WHITE);
 		welcomeLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
-		welcomeLabel.setBounds(250, 0, 330, 250);
+		welcomeLabel.setBounds(250, 100, 330, 50);
 		panel.add(welcomeLabel);
+		
+		/*Label to instruct player to enter name */
+		JLabel enterNameLabel = new JLabel("Enter your name:");
+		enterNameLabel.setForeground(Color.WHITE);
+		enterNameLabel.setFont(new Font("Times New Roman",Font.BOLD,16));
+		enterNameLabel.setBounds(220, 150, 150, 250);
+		panel.add(enterNameLabel);
+		
+		
 		
 		
 		return panel;
