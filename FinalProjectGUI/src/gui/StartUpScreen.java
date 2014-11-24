@@ -41,20 +41,48 @@ public class StartUpScreen extends JFrame{
 		characterImageLabel.setBounds(580, 100, 100, 100);
 		panel.add(characterImageLabel);
 		
-		/*Surviors label*/
-		JLabel surviorLabel = new JLabel("Survivors");
-		surviorLabel.setForeground(Color.WHITE);
-		surviorLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
-		surviorLabel.setBounds(200, 225, 275, 50);
-		panel.add(surviorLabel);
+		/*Survivors label*/
+		JLabel surviorsLabel = new JLabel("Survivors");
+		surviorsLabel.setForeground(Color.WHITE);
+		surviorsLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
+		surviorsLabel.setBounds(200, 225, 275, 50);
+		panel.add(surviorsLabel);
 		
 		/*Zombies label*/
-		JLabel zombieLabel = new JLabel("Zombies");
-		zombieLabel.setForeground(Color.WHITE);
-		zombieLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
-		zombieLabel.setBounds(500, 225, 275, 50);
-		panel.add(zombieLabel);
+		JLabel zombiesLabel = new JLabel("Zombies");
+		zombiesLabel.setForeground(Color.WHITE);
+		zombiesLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
+		zombiesLabel.setBounds(500, 225, 275, 50);
+		panel.add(zombiesLabel);
 		
+		/*Survivor Panel
+		 * Put in temporary info for list of survivors since we do not have actual data yet*/
+		JPanel survivorPanel = new JPanel();
+		survivorPanel.setLayout(new BoxLayout(survivorPanel,BoxLayout.Y_AXIS));
+		survivorPanel.setOpaque(false);
+		for(int i = 0; i < 2; i++){
+			JLabel surviorLabel = new JLabel("Player#" + i + " IP: 192.168.1.10" + i);
+			surviorLabel.setForeground(Color.WHITE);
+			surviorLabel.setFont(new Font("Times New Roman",Font.BOLD,16));
+			survivorPanel.add(surviorLabel);
+		}
+		survivorPanel.setBounds(200,275, 200, 100);
+		panel.add(survivorPanel);
+		
+		
+		/*Zombie Panel
+		 * Put in temporary info for list of survivors since we do not have actual data yet*/
+		JPanel zombiePanel = new JPanel();
+		zombiePanel.setLayout(new BoxLayout(zombiePanel,BoxLayout.Y_AXIS));
+		zombiePanel.setOpaque(false);
+		for(int i = 3; i <= 4; i++){
+			JLabel zombieLabel = new JLabel("Player#" + i + " IP: 192.168.1.10" + i);
+			zombieLabel.setForeground(Color.WHITE);
+			zombieLabel.setFont(new Font("Times New Roman",Font.BOLD,16));
+			zombiePanel.add(zombieLabel);
+		}
+		zombiePanel.setBounds(500,275, 200, 100);
+		panel.add(zombiePanel);
 		
 		
 		return panel;
