@@ -51,8 +51,6 @@ public class EndOfGameScreen extends JFrame {
 		/*
 		 * Quit Button
 		 */
-		
-		
 		JButton quitButton = new JButton("Quit");
 		quitButton.setFont(new Font("Times New Roman",Font.BOLD,32));
 		quitButton.setBounds(350, 450, 100, 50);
