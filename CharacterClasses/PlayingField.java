@@ -6,13 +6,14 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 class PlayingField extends Canvas implements Runnable{
+	private static final long serialVersionUID = 1666844355808226275L;
 	private GameObjectHandler gameObjects;
 	private int tileHeight = 32;
 	private int tileWidth = 32;
 	
 	public PlayingField(){
 		this.setBackground(Color.BLACK);
-		gameObjects = new GameObjectHandler(tileWidth,tileHeight);
+		gameObjects = new GameObjectHandler();
 		
 		this.addKeyListener(gameObjects.getController());
 	}
@@ -76,14 +77,5 @@ class PlayingField extends Canvas implements Runnable{
 		////////////
 		g.dispose();
 		bs.show();
-	}
-}
-
-class Tile {
-	private AIChar ai;
-	private int F, G, H;
-	
-	public Tile(AIChar ai){
-		this.ai = ai;
 	}
 }
