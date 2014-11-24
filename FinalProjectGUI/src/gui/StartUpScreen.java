@@ -27,11 +27,12 @@ public class StartUpScreen extends JFrame{
 		PanelBackground panel = new PanelBackground(2);
 		panel.setLayout(null);
 		
-		/*Label to inform client whether they are a zombie or a survivor*/
+		/*Label to inform client whether they are a zombie or a survivor
+		 * NOTE:THIS WILL NEED TO BE MODIFIED ONCE THE NETWORKING HAS BEEN IMPLEMENTED*/
 		this.characterLabel = new JLabel("You are a " + "zombie!");
 		characterLabel.setForeground(Color.WHITE);
 		characterLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
-		characterLabel.setBounds(300, 100, 275, 50);
+		characterLabel.setBounds(280, 100, 275, 50);
 		panel.add(characterLabel);
 		
 		/*Image to display to client indicating displaying that they are a zombie or survior*/
@@ -39,6 +40,19 @@ public class StartUpScreen extends JFrame{
 		JLabel characterImageLabel = new JLabel(new ImageIcon(this.resizeImage(temporaryImage,100,100)));
 		characterImageLabel.setBounds(580, 100, 100, 100);
 		panel.add(characterImageLabel);
+		
+		
+		JLabel surviorLabel = new JLabel("Survivors");
+		surviorLabel.setForeground(Color.WHITE);
+		surviorLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
+		surviorLabel.setBounds(200, 225, 275, 50);
+		panel.add(surviorLabel);
+		
+		JLabel zombieLabel = new JLabel("Zombies");
+		zombieLabel.setForeground(Color.WHITE);
+		zombieLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
+		zombieLabel.setBounds(500, 225, 275, 50);
+		panel.add(zombieLabel);
 		
 		return panel;
 	}
