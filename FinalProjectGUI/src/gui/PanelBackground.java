@@ -3,6 +3,7 @@ package gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -33,7 +34,8 @@ public class PanelBackground extends JPanel {
 			this.setBackGround(waitingScreenBackGround);
 			break;
 		case 2:
-			
+			ImageIcon startUpScreenBackGround = new ImageIcon("noWayOut.jpg");
+			this.setBackGround(startUpScreenBackGround);
 			break;
 		case 3:
 			
