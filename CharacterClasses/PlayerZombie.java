@@ -1,4 +1,4 @@
-package project;
+package project2;
 
 public class PlayerZombie extends PlayerMovement{
 	public PlayerZombie(PlayerChar player) {

@@ -1,4 +1,4 @@
-package project;
+package project2;
 
 public class PlayerSurvivor extends PlayerMovement{
 	

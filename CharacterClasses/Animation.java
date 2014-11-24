@@ -1,4 +1,4 @@
-package project;
+package project2;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

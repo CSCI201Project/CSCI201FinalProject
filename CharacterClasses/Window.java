@@ -1,4 +1,4 @@
-package project;
+package project2;
 
 import java.awt.Dimension;
 
@@ -11,6 +11,7 @@ public class Window extends JFrame{
 	public Window(PlayingField pf){
 		this.setSize(800,600);
 		this.setMinimumSize(new Dimension(800,600));
+		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pf = pf;
 		this.add(this.pf);
