@@ -3,8 +3,15 @@ package gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class StartUpScreen extends JFrame{
 
@@ -84,7 +91,36 @@ public class StartUpScreen extends JFrame{
 		zombiePanel.setBounds(500,275, 200, 100);
 		panel.add(zombiePanel);
 		
+		/*Start Button, only host should be able to click on this, use a flag to see if client
+		 * is a host, if client is a host, enable access to button, otherwise they cannot cick
+		 * on the button
+		 */
+		JButton startButton = new JButton("Start");
+		startButton.setFont(new Font("Times New Roman",Font.BOLD,32));
+		startButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			
+		});
+		startButton.setBounds(250, 475, 200, 75);
+		panel.add(startButton);
 		
+		/*Quit Button, exits the program*/
+		JButton quitButton = new JButton("Quit");
+		quitButton.setFont(new Font("Times New Roman",Font.BOLD,32));
+		quitButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+			
+		});
+		quitButton.setBounds(500, 475, 150, 75);
+		panel.add(quitButton);
 		return panel;
 	}
 	
