@@ -1,23 +1,37 @@
-package project;
+package project2;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.ImageIcon;
+
+import AStarSearch.AStarTest;
+
 class PlayingField extends Canvas implements Runnable{
+	static public int windowWidth;
+	static public int windowHeight;
 	private GameObjectHandler gameObjects;
+	private AStarTest mainMap;
+	private Camera cam;
 	private int tileHeight = 32;
 	private int tileWidth = 32;
 	
 	public PlayingField(){
 		this.setBackground(Color.BLACK);
 		gameObjects = new GameObjectHandler(tileWidth,tileHeight);
-		
-		this.addKeyListener(gameObjects.getController());
+		this.mainMap = new AStarTest();
 	}
 	public void run() {
 		//Game Loop that updates the screen and FPS constantly (Taken from RealTutsGML Youtube Channel)
+		gameObjects.init();
+		windowWidth = this.getWidth();
+		windowHeight = this.getHeight();
+		this.cam = new Camera(0,0);
+		this.addKeyListener(gameObjects.getController());
 		this.requestFocus();
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
@@ -41,7 +55,7 @@ class PlayingField extends Canvas implements Runnable{
 			
 			if(System.currentTimeMillis() - timer > 1000){
 				timer +=1000;
-				System.out.println("FPS:" + frames + " TICKS: "+ updates);
+				//System.out.println("FPS:" + frames + " TICKS: "+ updates);
 				frames = 0;
 				updates = 0;
 			}
@@ -49,7 +63,7 @@ class PlayingField extends Canvas implements Runnable{
 	}
 
 	private void update() {
-		gameObjects.update();
+		gameObjects.update(cam);
 	}
 	
 	private void render(){
@@ -61,6 +75,7 @@ class PlayingField extends Canvas implements Runnable{
 		}
 		
 		Graphics g = bs.getDrawGraphics();
+		Graphics2D g2d = (Graphics2D) g;
 		//////Actual Graphics///////
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -71,19 +86,12 @@ class PlayingField extends Canvas implements Runnable{
 		for(int i = 0; i<this.getWidth();i+=tileWidth){
 			g.drawLine(i, 0, i, this.getHeight());
 		}
-		gameObjects.render(g);
+		g2d.translate(cam.getX(),cam.getY());
 		
+		gameObjects.render(g);
+		g2d.translate(-cam.getX(),-cam.getY());
 		////////////
 		g.dispose();
 		bs.show();
-	}
-}
-
-class Tile {
-	private AIChar ai;
-	private int F, G, H;
-	
-	public Tile(AIChar ai){
-		this.ai = ai;
 	}
 }

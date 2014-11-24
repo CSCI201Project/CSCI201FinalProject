@@ -1,10 +1,6 @@
-package project;
+package project2;
 
-import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
@@ -14,6 +10,7 @@ public class Window extends JFrame{
 	Window(PlayingField pf){
 		this.setSize(800,600);
 		this.setMinimumSize(new Dimension(800,600));
+		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pf = pf;
 		this.add(this.pf);

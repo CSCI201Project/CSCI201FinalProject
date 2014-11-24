@@ -1,4 +1,4 @@
-package project;
+package project2;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
