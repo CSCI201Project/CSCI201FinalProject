@@ -41,18 +41,21 @@ public class StartUpScreen extends JFrame{
 		characterImageLabel.setBounds(580, 100, 100, 100);
 		panel.add(characterImageLabel);
 		
-		
+		/*Surviors label*/
 		JLabel surviorLabel = new JLabel("Survivors");
 		surviorLabel.setForeground(Color.WHITE);
 		surviorLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
 		surviorLabel.setBounds(200, 225, 275, 50);
 		panel.add(surviorLabel);
 		
+		/*Zombies label*/
 		JLabel zombieLabel = new JLabel("Zombies");
 		zombieLabel.setForeground(Color.WHITE);
 		zombieLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
 		zombieLabel.setBounds(500, 225, 275, 50);
 		panel.add(zombieLabel);
+		
+		
 		
 		return panel;
 	}
