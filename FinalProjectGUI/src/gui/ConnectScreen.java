@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -12,6 +15,7 @@ import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -113,7 +117,22 @@ public class ConnectScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//CODE TO CONNECT TO SERVER GOES HERE
-				
+				while(!isAllDigits(portTextField.getText())){
+					 portTextField.setText(JOptionPane.showInputDialog(null, "Enter a valid port number!"));
+				}
+				int port = Integer.parseInt(portTextField.getText());
+				/*try {
+					
+				     *COMMENTED OUT FOR TESTING PURPOSES
+					 * Socket clientSocket = new Socket(ipAddressTextField.getText(),port);
+					 *
+				} catch (UnknownHostException e1) {
+					
+					System.out.println("Client could not connect: " + e1.getMessage());;
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}*/
 			}
 			
 		});
@@ -136,6 +155,15 @@ public class ConnectScreen extends JFrame {
 		panel.add(quitButton);
 
 		return panel;
+	}
+	
+	private boolean isAllDigits(String portNumber){
+		if(portNumber.matches("[0-9]+")){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	
 	
