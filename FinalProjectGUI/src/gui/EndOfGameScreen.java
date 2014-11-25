@@ -41,12 +41,7 @@ public class EndOfGameScreen extends JFrame {
 		teamWonLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
 		teamWonLabel.setBounds(300, 0, 275, 50);
 		mainPanel.add(teamWonLabel);
-		
-		/*
-		 * Count down label
-		 */
-		
-		
+			
 		
 		/*
 		 * Statistics,NEED TO SEE WHAT STATISTICS WILL BE DISPLAYED
@@ -77,7 +72,10 @@ public class EndOfGameScreen extends JFrame {
 		return mainPanel;
 	}
 	
-	/*Starts a count down for the players to be returned to the lobby, updates
+	
+
+	/* Count down label
+	*Starts a count down for the players to be returned to the lobby, updates
 	 * the label each second and decrements the value by 1 each time
 	 */
 	private void startCountDownTimer(){

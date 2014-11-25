@@ -106,7 +106,7 @@ public class ConnectScreen extends JFrame {
 		
 		/*Connect Button*/
 		JButton connectButton = new JButton("Connect");
-		connectButton.setFont(new Font("Times New Roman",Font.BOLD,32));
+		connectButton.setFont(new Font("Times New Roman",Font.BOLD,20));
 		connectButton.setBounds(275, 500, 125, 45);
 		connectButton.addActionListener(new ActionListener(){
 
@@ -122,7 +122,7 @@ public class ConnectScreen extends JFrame {
 		
 		/*Quit Button*/
 		JButton quitButton = new JButton("Quit");
-		quitButton.setFont(new Font("Times New Roman",Font.BOLD,32));
+		quitButton.setFont(new Font("Times New Roman",Font.BOLD,20));
 		quitButton.setBounds(405, 500, 125, 45);
 		quitButton.addActionListener(new ActionListener(){
 
