@@ -157,6 +157,7 @@ public class ConnectScreen extends JFrame {
 		return panel;
 	}
 	
+	/*checks if the string parameter only contains digits*/
 	private boolean isAllDigits(String portNumber){
 		if(portNumber.matches("[0-9]+")){
 			return true;
