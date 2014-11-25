@@ -131,7 +131,7 @@ public class ConnectScreen extends JFrame {
 					System.out.println("Client could not connect: " + e1.getMessage());;
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e1.getMessage();
 				}*/
 			}
 			
