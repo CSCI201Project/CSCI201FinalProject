@@ -28,14 +28,14 @@ public class EndOfGameScreen extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(setupGUI());
 		this.setVisible(true);
-		this.updateCountDownTimer();
+		this.startCountDownTimer();
 	}
 	
 	private JPanel setupGUI(){
 	    mainPanel = new PanelBackground(1);
 		mainPanel.setLayout(null);
 		
-		/*Added winnner label*/
+		/*Winner label that will eventually display team that won the game*/
 		JLabel teamWonLabel = new JLabel("____ win!");
 		teamWonLabel.setForeground(Color.WHITE);
 		teamWonLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
@@ -77,18 +77,25 @@ public class EndOfGameScreen extends JFrame {
 		return mainPanel;
 	}
 	
-	private void updateCountDownTimer(){
-		this.countDownLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
-		this.countDownLabel.setBounds(300, 100, 400, 50);
+	/*Starts a count down for the players to be returned to the lobby, updates
+	 * the label each second and decrements the value by 1 each time
+	 */
+	private void startCountDownTimer(){
+		this.countDownLabel.setForeground(Color.WHITE);
+		this.countDownLabel.setFont(new Font("Times New Roman",Font.BOLD,25));
+		this.countDownLabel.setBounds(300, 100, 400, 75);
 		this.mainPanel.add(this.countDownLabel);
 		for(int i = 0; i <= 10; i++){
-			this.countDownLabel.setText(this.countDownTimer-- + "S until the game \n goes back to the start up screen");
+			this.countDownLabel.setText("<html>" + this.countDownTimer-- + " S until the game <br> goes back to the start up screen</html>");
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+		/*At This point, the counter is 0, everyone that is still connected should be taken back
+		 * to the login screen so that they can play again
+		 */
 	}
 	
 	public static void main(String [] args){
