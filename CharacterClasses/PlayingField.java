@@ -12,12 +12,9 @@ import javax.swing.ImageIcon;
 import AStarSearch.AStarTest;
 
 class PlayingField extends Canvas implements Runnable{
-<<<<<<< HEAD
 	private static final long serialVersionUID = 1666844355808226275L;
-=======
 	static public int windowWidth;
 	static public int windowHeight;
->>>>>>> 48a95a37cdac62f4478f140347d260d44e914ce4
 	private GameObjectHandler gameObjects;
 	private AStarTest mainMap;
 	private Camera cam;
@@ -26,14 +23,10 @@ class PlayingField extends Canvas implements Runnable{
 	
 	public PlayingField(){
 		this.setBackground(Color.BLACK);
-<<<<<<< HEAD
 		gameObjects = new GameObjectHandler();
-		
 		this.addKeyListener(gameObjects.getController());
-=======
 		gameObjects = new GameObjectHandler(tileWidth,tileHeight);
 		this.mainMap = new AStarTest();
->>>>>>> 48a95a37cdac62f4478f140347d260d44e914ce4
 	}
 	public void run() {
 		//Game Loop that updates the screen and FPS constantly (Taken from RealTutsGML Youtube Channel)
@@ -104,8 +97,4 @@ class PlayingField extends Canvas implements Runnable{
 		g.dispose();
 		bs.show();
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 48a95a37cdac62f4478f140347d260d44e914ce4
