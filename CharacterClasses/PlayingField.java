@@ -162,9 +162,7 @@ class Tree extends GameObject{
 
 	public void render(Graphics g) {
 		ImageIcon icon = new ImageIcon("images/tree.png","tree");
-		Image image = icon.getImage();//().getScaledInstance(60,60, Image.SCALE_SMOOTH);
-		/*icon.setImage(image);
-		image = icon.getImage();*/
+		Image image = icon.getImage();
 		g.drawImage(image, (int)this.x, (int)this.y, null);
 	}
 

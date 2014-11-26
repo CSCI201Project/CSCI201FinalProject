@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 public class Window extends JFrame{
-	private static final long serialVersionUID = 396533916263846865L;
 	private PlayingField pf;
 	
 	public Window(PlayingField pf){
