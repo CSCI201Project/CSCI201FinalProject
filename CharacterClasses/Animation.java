@@ -9,6 +9,7 @@ public class Animation {
 	
 	private int index = 0;
 	private int count = 0;
+	protected boolean cycleComplete = false;
 	
 	private BufferedImage[] images;
 	private BufferedImage currentImg;
@@ -43,6 +44,7 @@ public class Animation {
 		++count;
 		if(count > frames) {
 			count = 0;
+			cycleComplete = true;
 		}
 	}
 }

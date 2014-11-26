@@ -5,6 +5,5 @@ public abstract class Character extends GameObject{
 		super(id);
 	}
 	protected int health;
-	protected int width = 32, height = 64;
-	
+	protected int width = 32, height = 64;	
 }

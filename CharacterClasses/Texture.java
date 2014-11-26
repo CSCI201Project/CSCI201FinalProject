@@ -3,15 +3,20 @@ package project2;
 import java.awt.image.BufferedImage;
 
 public class Texture {
-	private SpriteSheet ss;
-	private BufferedImage sheet;
-	public BufferedImage[] sprites = new BufferedImage[3];
+	private SpriteSheet cs, is;
+	private BufferedImage characterSheet, itemSheet;
+	public BufferedImage[] survivorWalkSprites = new BufferedImage[3];
+	public BufferedImage[] zombieWalkSprites = new BufferedImage[3];
+	public BufferedImage[] zombieAttackSprites = new BufferedImage[6];
+	public BufferedImage[] items = new BufferedImage[3];
 	
-	public Texture(String filename) {
+	public Texture() {
 		try {
 			BufferedImageLoader loader = new BufferedImageLoader();
-			sheet = loader.loadImage(filename);
-			ss = new SpriteSheet(sheet);
+			characterSheet = loader.loadImage("images/oie_transparent.png");
+			cs = new SpriteSheet(characterSheet);
+			itemSheet = loader.loadImage("images/oie_transparent2.png");
+			is = new SpriteSheet(itemSheet);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -19,8 +24,23 @@ public class Texture {
 	}
 	
 	private void getTextures() {
-		sprites[0] = ss.grabImage(0, 0, 64, 38);
-		sprites[1] = ss.grabImage(1, 0, 64, 38);
-		sprites[2] = ss.grabImage(2, 0, 64, 38);
+		survivorWalkSprites[0] = cs.grabImage(0, 0, 67, 40);
+		survivorWalkSprites[1] = cs.grabImage(1, 0, 67, 40);
+		survivorWalkSprites[2] = cs.grabImage(2, 0, 67, 40);
+		
+		zombieWalkSprites[0] = cs.grabImage(0, 3, 67, 40);
+		zombieWalkSprites[1] = cs.grabImage(5, 3, 67, 40);
+		zombieWalkSprites[2] = cs.grabImage(6, 3, 67, 40);
+		
+		zombieAttackSprites[0] = cs.grabImage(0, 3, 67, 40);
+		zombieAttackSprites[1] = cs.grabImage(1, 3, 67, 40);
+		zombieAttackSprites[2] = cs.grabImage(2, 3, 67, 40);
+		zombieAttackSprites[3] = cs.grabImage(3, 3, 67, 40);
+		zombieAttackSprites[4] = cs.grabImage(2, 3, 67, 40);
+		zombieAttackSprites[5] = cs.grabImage(4, 3, 67, 40);
+		
+		items[0] = is.grabImage(0, 0, 46, 21);
+		items[1] = is.grabImage(1, 0, 46, 21);
+		items[2] = is.grabImage(2, 0, 46, 21);
 	}
 }

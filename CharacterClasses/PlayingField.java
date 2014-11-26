@@ -4,34 +4,25 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferStrategy;
 
-import javax.swing.ImageIcon;
-
-import AStarSearch.AStarTest;
+//import AStarSearch.AStarTest;
 
 class PlayingField extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1666844355808226275L;
 	static public int windowWidth;
 	static public int windowHeight;
 	private GameObjectHandler gameObjects;
-//	private AStarTest mainMap;
+	//private AStarTest mainMap;
 	private Camera cam;
 	private int tileHeight = 32;
 	private int tileWidth = 32;
 	
 	public PlayingField(){
 		this.setBackground(Color.BLACK);
-<<<<<<< HEAD
-		gameObjects = new GameObjectHandler();
-		this.addKeyListener(gameObjects.getController());
-		gameObjects = new GameObjectHandler(tileWidth,tileHeight);
-		this.mainMap = new AStarTest();
-=======
-		gameObjects = new GameObjectHandler(tileWidth,tileHeight);
+		gameObjects = new GameObjectHandler(tileWidth, tileHeight);
+		
 		//this.mainMap = new AStarTest();
->>>>>>> a8bbbb0255aefa9feabf2d941ec94ec4b125c011
 	}
 	public void run() {
 		//Game Loop that updates the screen and FPS constantly (Taken from RealTutsGML Youtube Channel)

@@ -6,21 +6,23 @@ import java.util.Vector;
 public class GameObjectHandler {
 	private Vector<GameObject> objects = new Vector<GameObject>();
 	protected PlayerChar player;
-	protected int fieldTileX. fieldTileY;
-
+	protected int fieldTileX;
+	protected int fieldTileY;
+	
 	public GameObjectHandler(int x, int y){
 		this.fieldTileX = x;
 		this.fieldTileY = y;
-		
 	}
+	
 	public void init(){
 		createLevel();
-		player = new PlayerChar("Chris",ObjectId.HumanSurvivor);
-		this.addObject(player);
+		player = new PlayerChar("Chris",ObjectId.HumanZombie);
+		this.addObject(player);		
 	}
+	
 	public void createLevel(){
-		for(int i = 0; i < 10; i++){
-			this.addObject(new AIChar(i*fieldTileX, 20, ObjectId.NormalZombie));
+		for(int i = 0; i < 1; i++){
+			this.addObject(new AIChar(i*fieldTileX, 20, 128, 64, ObjectId.NormalZombie));
 		}
 	}
 	
@@ -31,7 +33,8 @@ public class GameObjectHandler {
 	public PlayerMovement getController(){
 		return player.getKeyAdapter();
 	}
-	public void update(Camera cam){
+	
+	public void update(Camera cam){		
 		for(GameObject singleObject: objects){
 			singleObject.update(objects);
 		}
@@ -51,6 +54,7 @@ public class GameObjectHandler {
 	public void removeObject(GameObject go){
 		this.objects.remove(go);
 	}
+	
 	public int size(){
 		return this.objects.size();
 	}

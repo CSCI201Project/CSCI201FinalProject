@@ -15,7 +15,7 @@ public class Window extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pf = pf;
 		this.add(this.pf);
-		Thread t = new Thread(this.pf);
+		Thread t = new Thread(pf);
 		
 		this.setVisible(true);
 		t.start();

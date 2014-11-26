@@ -6,6 +6,6 @@ public class PlayerZombie extends PlayerMovement{
 	}
 
 	public void attack() {
-		
+		player.attacking = true;
 	}
 }
