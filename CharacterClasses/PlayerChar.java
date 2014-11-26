@@ -59,6 +59,10 @@ public class PlayerChar extends Character{
 			g2d.rotate(3*Math.PI/2, x+32, y+18);
 			break;
 		}
+<<<<<<< HEAD
+=======
+		
+>>>>>>> a8bbbb0255aefa9feabf2d941ec94ec4b125c011
 		if(velX != 0 || velY != 0) {
 			playerWalk.drawAnimation(g, (int) x, (int) y);
 		}

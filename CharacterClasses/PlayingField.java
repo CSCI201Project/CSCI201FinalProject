@@ -16,17 +16,22 @@ class PlayingField extends Canvas implements Runnable{
 	static public int windowWidth;
 	static public int windowHeight;
 	private GameObjectHandler gameObjects;
-	private AStarTest mainMap;
+//	private AStarTest mainMap;
 	private Camera cam;
 	private int tileHeight = 32;
 	private int tileWidth = 32;
 	
 	public PlayingField(){
 		this.setBackground(Color.BLACK);
+<<<<<<< HEAD
 		gameObjects = new GameObjectHandler();
 		this.addKeyListener(gameObjects.getController());
 		gameObjects = new GameObjectHandler(tileWidth,tileHeight);
 		this.mainMap = new AStarTest();
+=======
+		gameObjects = new GameObjectHandler(tileWidth,tileHeight);
+		//this.mainMap = new AStarTest();
+>>>>>>> a8bbbb0255aefa9feabf2d941ec94ec4b125c011
 	}
 	public void run() {
 		//Game Loop that updates the screen and FPS constantly (Taken from RealTutsGML Youtube Channel)
