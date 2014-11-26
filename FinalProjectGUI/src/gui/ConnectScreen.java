@@ -39,7 +39,7 @@ public class ConnectScreen extends JFrame {
 		this.setVisible(true);
 		
 		try{
-			 AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("swamp.wav"));
+			 AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("sounds/swamp.wav"));
 		        Clip clip = AudioSystem.getClip();
 		        clip.open(inputStream);
 		        clip.loop(Clip.LOOP_CONTINUOUSLY);
