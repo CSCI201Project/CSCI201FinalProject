@@ -38,16 +38,8 @@ public class ConnectScreen extends JFrame {
 		this.add(setupGUI());
 		this.setVisible(true);
 		
-		try{
-			 AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("sounds/swamp.wav"));
-		        Clip clip = AudioSystem.getClip();
-		        clip.open(inputStream);
-		        clip.loop(Clip.LOOP_CONTINUOUSLY);
-		        Thread.sleep(10000); // looping as long as this thread is alive
-		}
-		catch(Exception e){
-			System.out.println(e.getMessage());
-		}
+		SoundPlayer swampSound = new SoundPlayer("sounds/swamp.wav");
+		swampSound.playSoundContinuously();
 	}
 	
 	/*Set's up the GUI and returns the panel holding the components*/
@@ -120,7 +112,11 @@ public class ConnectScreen extends JFrame {
 				while(!isAllDigits(portTextField.getText())){
 					 portTextField.setText(JOptionPane.showInputDialog(null, "Enter a valid port number!"));
 				}
+				
+				/*if the client has gotten this far, they have entered a number for the port number*/
 				int port = Integer.parseInt(portTextField.getText());
+				
+				
 				/*try {
 					
 				     *COMMENTED OUT FOR TESTING PURPOSES
@@ -133,6 +129,13 @@ public class ConnectScreen extends JFrame {
 					// TODO Auto-generated catch block
 					e1.getMessage();
 				}*/
+				
+				
+				
+				/*After the client has connected to the server, kill the sound currently playing, play the
+				 * audio clip of the girl screaming, and then loadup the waiting screen
+				 */
+				
 			}
 			
 		});
