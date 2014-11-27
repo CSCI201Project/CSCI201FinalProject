@@ -135,7 +135,7 @@ public class ConnectScreen extends JFrame {
 				
 				/*After the client has connected to the server, stop the sound, and load up waiting screen*/
 				swampSound.stopSound();
-				swampSound.closeAudioFile();
+				//swampSound.closeAudioFile();
 				frame.setVisible(false);
 				new WaitingScreen();
 				
