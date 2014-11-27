@@ -26,7 +26,8 @@ public class PanelBackground extends JPanel {
 		 */
 		switch(backGroundNumber){
 		case 0:
-			this.backGroundImage = Toolkit.getDefaultToolkit().getImage("images/forest.gif");
+			ImageIcon connectScreenImage = new ImageIcon("images/bloodWallPaper.jpg");
+			this.setBackGround(connectScreenImage);
 			break;
 		case 1:
 			ImageIcon waitingScreenBackGround = new ImageIcon("images/darkForest.jpg");
