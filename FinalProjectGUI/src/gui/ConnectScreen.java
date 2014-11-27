@@ -137,7 +137,7 @@ public class ConnectScreen extends JFrame {
 				swampSound.stopSound();
 				//swampSound.closeAudioFile();
 				frame.setVisible(false);
-				new WaitingScreen();
+				
 				
 			}
 			

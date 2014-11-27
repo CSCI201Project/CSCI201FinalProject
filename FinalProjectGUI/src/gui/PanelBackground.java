@@ -33,8 +33,8 @@ public class PanelBackground extends JPanel {
 			this.setBackGround(waitingScreenBackGround);
 			break;
 		case 2:
-			ImageIcon startUpScreenBackGround = new ImageIcon("images/noWayOut.jpg");
-			this.setBackGround(startUpScreenBackGround);
+			ImageIcon startUpScreen = new ImageIcon("images/forest2.jpg");
+			this.setBackGround(startUpScreen);
 			break;
 		case 3:
 			this.backGroundImage = Toolkit.getDefaultToolkit().getImage("images/hacker.gif");

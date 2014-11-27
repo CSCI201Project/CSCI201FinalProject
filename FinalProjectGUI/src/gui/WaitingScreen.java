@@ -51,6 +51,9 @@ public class WaitingScreen extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				//Start game
 				
+				zombieSound.stopSound();
+				zombieSound.closeAudioFile();
+				
 			}
 			
 		});
