@@ -26,7 +26,7 @@ public class ConnectScreen extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 8718869258020517546L;
-	
+	private JFrame frame = this;
 	private PanelBackground panel;
 	private JTextField playerNameTextField;
 	private JTextField ipAddressTextField;
@@ -133,19 +133,11 @@ public class ConnectScreen extends JFrame {
 				}*/
 				
 				
-				
-				/*After the client has connected to the server, remove all components,kill the sound currently playing, play the
-				 * audio clip of the girl screaming, put up a scary image, and then loadup the waiting screen
-				 */
+				/*After the client has connected to the server, stop the sound, and load up waiting screen*/
 				swampSound.stopSound();
 				swampSound.closeAudioFile();
-				panel.removeAll();
-				panel.revalidate();
-				panel.repaint();
-				panel.setBackGround(new ImageIcon("images/zombiePopUpPicture.jpg"));
-				SoundPlayer screamSound = new SoundPlayer("sounds/girlScream.wav");
-				screamSound.playSoundOnce();
-				
+				frame.setVisible(false);
+				new WaitingScreen();
 				
 			}
 			
