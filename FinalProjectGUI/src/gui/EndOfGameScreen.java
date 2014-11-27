@@ -32,7 +32,7 @@ public class EndOfGameScreen extends JFrame {
 	}
 	
 	private JPanel setupGUI(){
-	    mainPanel = new PanelBackground(1);
+	    mainPanel = new PanelBackground(3);
 		mainPanel.setLayout(null);
 		
 		/*Winner label that will eventually display team that won the game*/
@@ -45,6 +45,7 @@ public class EndOfGameScreen extends JFrame {
 		
 		/*
 		 * Statistics,NEED TO SEE WHAT STATISTICS WILL BE DISPLAYED
+		 * NOT COMPLETELY IMPLEMENTED YET
 		 */
 		/*Statistics Panel*/
 		JPanel statisticsPanel = new JPanel();

@@ -26,19 +26,19 @@ public class PanelBackground extends JPanel {
 		 */
 		switch(backGroundNumber){
 		case 0:
-		    ImageIcon loginBackground = new ImageIcon("bloodWallPaper.jpg");
+		    ImageIcon loginBackground = new ImageIcon("images/bloodWallPaper.jpg");
 			this.setBackGround(loginBackground);
 			break;
 		case 1:
-			ImageIcon waitingScreenBackGround = new ImageIcon("darkForest.jpg");
+			ImageIcon waitingScreenBackGround = new ImageIcon("images/darkForest.jpg");
 			this.setBackGround(waitingScreenBackGround);
 			break;
 		case 2:
-			ImageIcon startUpScreenBackGround = new ImageIcon("noWayOut.jpg");
+			ImageIcon startUpScreenBackGround = new ImageIcon("images/noWayOut.jpg");
 			this.setBackGround(startUpScreenBackGround);
 			break;
 		case 3:
-			
+			this.backGroundImage = Toolkit.getDefaultToolkit().getImage("images/hacker.gif");
 			break;
 			default://do nothing
 		}
@@ -57,6 +57,6 @@ public class PanelBackground extends JPanel {
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		g.drawImage(this.backGroundImage, 0, 0, null);
+		g.drawImage(this.backGroundImage, 0, 0, this);
 	}
 }

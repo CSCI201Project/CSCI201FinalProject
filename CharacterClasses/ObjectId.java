@@ -8,5 +8,8 @@ public enum ObjectId {
 	Tree(),
 	Bush(),
 	Tombstone(),
-	Cross();
+	Cross(),
+	Pistol(),
+	Rifle(),
+	Shotgun();
 }

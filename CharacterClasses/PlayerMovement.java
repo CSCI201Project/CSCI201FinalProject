@@ -7,7 +7,6 @@ abstract class PlayerMovement extends KeyAdapter{
 	protected PlayerChar player;
 	
 	public abstract void attack();
-	
 	public PlayerMovement(PlayerChar player){
 		this.player = player;
 	}
