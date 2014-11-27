@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,11 +26,12 @@ public class ConnectScreen extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 8718869258020517546L;
-	
+	private JFrame frame = this;
+	private PanelBackground panel;
 	private JTextField playerNameTextField;
 	private JTextField ipAddressTextField;
 	private JTextField portTextField;
-
+	private SoundPlayer swampSound;
 	public ConnectScreen(){
 		super("Connect Screen");
 		this.setSize(800, 600);
@@ -37,14 +39,14 @@ public class ConnectScreen extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(setupGUI());
 		this.setVisible(true);
-		
-		SoundPlayer swampSound = new SoundPlayer("sounds/swamp.wav");
+		/*play sound continuously until the player connects or quits*/
+		swampSound = new SoundPlayer("sounds/swamp.wav");
 		swampSound.playSoundContinuously();
 	}
 	
 	/*Set's up the GUI and returns the panel holding the components*/
 	public JPanel setupGUI(){
-		PanelBackground panel = new PanelBackground(0);
+	    panel = new PanelBackground(0);
 		panel.setLayout(null);
 		
 		/*Game Title*/
@@ -131,10 +133,11 @@ public class ConnectScreen extends JFrame {
 				}*/
 				
 				
-				
-				/*After the client has connected to the server, kill the sound currently playing, play the
-				 * audio clip of the girl screaming, and then loadup the waiting screen
-				 */
+				/*After the client has connected to the server, stop the sound, and load up waiting screen*/
+				swampSound.stopSound();
+				//swampSound.closeAudioFile();
+				frame.setVisible(false);
+				new WaitingScreen();
 				
 			}
 			

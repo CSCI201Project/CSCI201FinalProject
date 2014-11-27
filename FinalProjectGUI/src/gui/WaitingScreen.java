@@ -17,7 +17,7 @@ public class WaitingScreen extends JFrame{
 	private JButton playButton;
 	private JComboBox<String> timeLimitCB;
 	private JPanel connectedPlayersPanel;
-	
+	private SoundPlayer zombieSound;
 	
 	public WaitingScreen(){
 		super("Waiting Screen");
@@ -26,6 +26,8 @@ public class WaitingScreen extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(setupGUI());
 		this.setVisible(true);
+	    zombieSound = new SoundPlayer("sounds/waitingScreenAmbience.wav");
+		zombieSound.playSoundContinuously();
 	}
 	
 	public JPanel setupGUI(){
