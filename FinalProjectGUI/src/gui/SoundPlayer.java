@@ -14,21 +14,22 @@ public class SoundPlayer {
 	private AudioInputStream inputStream;
 	private Clip clip;
 	
+	/*NOT ALL FILE TYPES ARE SUPPORTED, WAV WORKS FOR SURE*/
 	public SoundPlayer(String soundFile){
 		try {
 			this.inputStream = AudioSystem.getAudioInputStream(new File(soundFile));
 			this.clip = AudioSystem.getClip();
 			this.clip.open(this.inputStream);
 		} catch (UnsupportedAudioFileException e) {
-			System.out.println("Sound Player could not get audio file" + e.getMessage());
+			System.out.println("Unsupported audio file " + e.getMessage());
 		} catch (IOException e) {
-			System.out.println("Sound Player could not get audio file" + e.getMessage());
+			System.out.println("Sound Player could not get audio file " + e.getMessage());
 		} catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Line unavailbalbe exception " + e.getMessage());
 		}
 	}
 	
+	/*continuously plays a audio clip until the clip is stopped*/
 	public void playSoundContinuously(){
 		clip.loop(Clip.LOOP_CONTINUOUSLY); // looping as long as this thread is alive
 		  try {
