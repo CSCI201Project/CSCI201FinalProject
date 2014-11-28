@@ -80,10 +80,11 @@ public class WaitingScreen extends JFrame{
 		 panel.add(timeLimitCB);
 		
 		 /*Label to indicate that server is waiting for players to connect*/
-		 JLabel waitingForPlayersLabel = new JLabel("Waiting for other players to connect. . .");
+		 BlinkLabel waitingForPlayersLabel = new BlinkLabel("Waiting for other players to connect. . .");
 		 waitingForPlayersLabel.setForeground(Color.WHITE);
 		 waitingForPlayersLabel.setFont(new Font("Times New Roman",Font.BOLD,20));
 		 waitingForPlayersLabel.setBounds(250, 150, 400, 50);
+		 waitingForPlayersLabel.setBlinking(true);
 		 panel.add(waitingForPlayersLabel);
 		
 		 /*connected players label*/
