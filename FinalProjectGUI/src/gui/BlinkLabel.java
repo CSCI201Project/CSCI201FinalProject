@@ -18,9 +18,7 @@ import javax.swing.JLabel;
  *    original foreground color and the background color.  This makes 
  *    the label text appear and disappear (when foreground == background).
  * 
- * TODO: Make this a decorator. Then you could blink any Component.
  * 
- * @author James Brucker
  */
 public class BlinkLabel extends JLabel {
 	private static final long serialVersionUID = 1L;
@@ -71,15 +69,10 @@ public class BlinkLabel extends JLabel {
 	 */
 	class BlinkTask extends TimerTask {
 		private JLabel label;
-		/** label's original background color */
-		private Color bg;
-		/** label's original foreground color */
-		private Color fg;
+		
 
 		public BlinkTask(JLabel label) {
 			this.label = label;
-			fg = label.getForeground();
-			bg = label.getBackground();
 		}
 
 		/**
@@ -99,7 +92,7 @@ public class BlinkLabel extends JLabel {
 		 * foreground color.  This ensures the label is visible.
 		 */
 		public boolean cancel() {
-			label.setForeground(fg);
+			label.setVisible(true);
 			return true; // success
 		}
 	}
