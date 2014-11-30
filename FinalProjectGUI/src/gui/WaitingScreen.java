@@ -72,7 +72,7 @@ public class WaitingScreen extends JFrame{
 		 * is the host*/
 		 timeLimitCB = new JComboBox<String>();
 		 /*Note: Not sure yet of maximum time being allowed, just going up to ten for now*/
-		 for(int i = 1; i <= 10;i++){
+		 for(int i = 1; i <= 5;i++){
 			 timeLimitCB.addItem(i + " Minutes");
 		 }
 		 timeLimitCB.setFont(new Font("Times New Roman",Font.BOLD,15));

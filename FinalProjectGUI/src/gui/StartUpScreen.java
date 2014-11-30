@@ -91,17 +91,31 @@ public class StartUpScreen extends JFrame{
 		zombiePanel.setBounds(500,275, 200, 100);
 		panel.add(zombiePanel);
 		
+		/*Waiting for host label*/
+		BlinkLabel waitingLabel = new BlinkLabel("Waiting for host to start the game .  .  . ");
+		waitingLabel.setForeground(Color.WHITE);
+		waitingLabel.setFont(new Font("Times New Roman", Font.BOLD, 32));
+		waitingLabel.setBounds(200, 375, 500, 50);
+		waitingLabel.setBlinking(true);
+		panel.add(waitingLabel);
+		
 		/*Start Button, only host should be able to click on this, use a flag to see if client
 		 * is a host, if client is a host, enable access to button, otherwise they cannot cick
 		 * on the button
 		 */
 		JButton startButton = new JButton("Start");
+		/*if(isHost){
+			startButton.setEnabled(true);
+		}
+		else{
+			startButton.setEnabled(false);
+		}*/
 		startButton.setFont(new Font("Times New Roman",Font.BOLD,32));
 		startButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				//START GAME HERE
 			}
 			
 		});
