@@ -38,7 +38,9 @@ public class PanelBackground extends JPanel {
 			this.setBackGround(startUpScreen);
 			break;
 		case 3:
-			this.backGroundImage = Toolkit.getDefaultToolkit().getImage("images/hacker.gif");
+			//credit for background http://thehdwall.com/tombstone-dark-halloween-trees-forest-woods-night-scary-spooky-creepy-glow-cemetery-grave-landscapes-wallpapers-hd-free-50509/
+			ImageIcon endOfGameScreen = new ImageIcon("images/forest3.jpg");
+			this.setBackGround(endOfGameScreen);
 			break;
 			default://do nothing
 		}

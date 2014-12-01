@@ -51,6 +51,7 @@ public class EndOfGameScreen extends JFrame {
 		JPanel statisticsPanel = new JPanel();
 		statisticsPanel.setLayout(new BoxLayout(statisticsPanel,BoxLayout.Y_AXIS));
 		statisticsPanel.setBounds(280, 200, 250, 300);
+		statisticsPanel.setOpaque(false);
 		mainPanel.add(statisticsPanel);
 		
 		/*

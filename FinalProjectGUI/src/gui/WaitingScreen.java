@@ -17,7 +17,7 @@ public class WaitingScreen extends JFrame{
 	private JButton playButton;
 	private JComboBox<String> timeLimitCB;
 	private JPanel connectedPlayersPanel;
-	private SoundPlayer zombieSound;
+	private SoundPlayer ambienceSound;
 	
 	public WaitingScreen(){
 		super("Waiting Screen");
@@ -26,8 +26,8 @@ public class WaitingScreen extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(setupGUI());
 		this.setVisible(true);
-	    zombieSound = new SoundPlayer("sounds/waitingScreenAmbience.wav");
-		zombieSound.playSoundContinuously();
+		ambienceSound = new SoundPlayer("sounds/waitingScreenAmbience.wav");
+	    ambienceSound.playSoundContinuously();
 	}
 	
 	public JPanel setupGUI(){
@@ -51,8 +51,8 @@ public class WaitingScreen extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				//Start game
 				
-				zombieSound.stopSound();
-				zombieSound.closeAudioFile();
+				ambienceSound.stopSound();
+				ambienceSound.closeAudioFile();
 				
 			}
 			
@@ -71,10 +71,10 @@ public class WaitingScreen extends JFrame{
 		 * from the combo box, the combo box should only be enable if the connected client
 		 * is the host*/
 		 timeLimitCB = new JComboBox<String>();
-		 /*Note: Not sure yet of maximum time being allowed, just going up to ten for now*/
-		 for(int i = 1; i <= 5;i++){
+		 for(int i = 1; i <= 5; i++){
 			 timeLimitCB.addItem(i + " Minutes");
 		 }
+		 
 		 timeLimitCB.setFont(new Font("Times New Roman",Font.BOLD,15));
 		 timeLimitCB.setBounds(400, 100, 150, 50);
 		 panel.add(timeLimitCB);

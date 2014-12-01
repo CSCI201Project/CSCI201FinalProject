@@ -22,9 +22,6 @@ import javax.swing.JTextField;
 
 public class ConnectScreen extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8718869258020517546L;
 	private JFrame frame = this;
 	private PanelBackground panel;
@@ -110,6 +107,11 @@ public class ConnectScreen extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				while(!validIP(ipAddressTextField.getText())){
+					ipAddressTextField.setText(JOptionPane.showInputDialog(null, "Enter a valid ip address!"));
+				}
+				
+				String ipAddress = ipAddressTextField.getText();
 				//CODE TO CONNECT TO SERVER GOES HERE
 				while(!isAllDigits(portTextField.getText())){
 					 portTextField.setText(JOptionPane.showInputDialog(null, "Enter a valid port number!"));
@@ -161,6 +163,34 @@ public class ConnectScreen extends JFrame {
 		panel.add(quitButton);
 
 		return panel;
+	}
+	
+	/*checks if the ip address is valid*/
+	private static boolean validIP (String ip) {
+	    try {
+	        if (ip == null || ip.isEmpty()) {
+	            return false;
+	        }
+
+	        String[] parts = ip.split( "\\." );
+	        if ( parts.length != 4 ) {
+	            return false;
+	        }
+
+	        for ( String s : parts ) {
+	            int i = Integer.parseInt( s );
+	            if ( (i < 0) || (i > 255) ) {
+	                return false;
+	            }
+	        }
+	        if(ip.endsWith(".")) {
+	                return false;
+	        }
+
+	        return true;
+	    } catch (NumberFormatException nfe) {
+	        return false;
+	    }
 	}
 	
 	/*checks if the string parameter only contains digits*/
