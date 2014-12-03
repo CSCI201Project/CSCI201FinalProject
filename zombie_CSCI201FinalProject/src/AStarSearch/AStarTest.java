@@ -87,13 +87,15 @@ public class AStarTest implements TileBasedMap {
     */
    public void updateLocation() {
 	  if(path == null){
-		//System.out.println("PATH IS NULL");
-		try {
+		  System.out.println("PATH IS NULL");
+		  try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	  } else {
+	  }
+	  if(path !=null){
 		Step step = path.getStep();
       	this.ai.moveAI(step.getX(), step.getY());
 	  }

@@ -9,13 +9,14 @@ import javax.swing.*;
 
 import networking.ZombieGameClient;
 import networking.ZombieGameServer;
-import networking.ZombieThread;
 
 public class WaitingScreen extends JFrame implements Nextable {
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1164599519412930761L;
 
-	PanelBackground panel;
-	
 	private JButton playButton;
 	private JComboBox<String> timeLimitCB;
 	private JPanel connectedPlayersPanel;
@@ -41,7 +42,7 @@ public class WaitingScreen extends JFrame implements Nextable {
 	}
 	
 	public JPanel setupGUI(){
-		panel = new PanelBackground(1);
+		PanelBackground panel = new PanelBackground(1);
 		panel.setLayout(null);
 		/*Play Button, only Host should be able to click this, this will
 		 * have to be modified later so that this functionality is made
@@ -88,7 +89,6 @@ public class WaitingScreen extends JFrame implements Nextable {
 		 for(int i = 1; i <= 5; i++){
 			 timeLimitCB.addItem(i + " Minutes");
 		 }
-		 timeLimitCB.setSelectedIndex(timeLimitCB.getItemCount()-1);
 		 
 		 timeLimitCB.setFont(new Font("Times New Roman",Font.BOLD,15));
 		 timeLimitCB.setBounds(400, 100, 150, 50);
@@ -107,7 +107,7 @@ public class WaitingScreen extends JFrame implements Nextable {
 		 JLabel connectedPlayersLabel = new JLabel("Connected players. . .");
 		 connectedPlayersLabel.setForeground(Color.WHITE);
 		 connectedPlayersLabel.setFont(new Font("Times New Roman",Font.BOLD,20));
-		 connectedPlayersLabel.setBounds(315, 250, 200, 50);
+		 connectedPlayersLabel.setBounds(320, 250, 200, 50);
 		 panel.add(connectedPlayersLabel);
 		 
 		 /*connected players list,
@@ -116,17 +116,26 @@ public class WaitingScreen extends JFrame implements Nextable {
 		 connectedPlayersPanel = new JPanel();
 		 connectedPlayersPanel.setLayout(new BoxLayout(this.connectedPlayersPanel,BoxLayout.Y_AXIS));
 		 connectedPlayersPanel.setOpaque(false);
-		 connectedPlayersPanel.setBounds(285, 300, 400, 100);
+		 connectedPlayersPanel.setBounds(300, 300, 400, 100);
+		 /*FILLER CONNECTED PLAYERS LIST FOR TESTING*/
+		 for(int i = 1; i <=4; i++){
+			 JLabel label = new JLabel("Player " + i + " IP: 192.168.1.10" + i);
+			 label.setForeground(Color.WHITE);
+			 label.setFont(new Font("Times New Roman",Font.BOLD,20));
+			 connectedPlayersPanel.add(label);
+		 } 
+		 panel.add(connectedPlayersPanel);
 		 
 		 /*Quit Button*/
 		 JButton quitButton = new JButton("Quit");
 		 quitButton.setFont(new Font("Times New Roman",Font.BOLD,48));
-		 quitButton.setBounds(300, 482, 200, 75);
+		 quitButton.setBounds(310, 450, 200, 75);
 		 quitButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				/*If quit is pressed, disconnect, exit program*/
 				System.exit(0);
+				
 			}
 		 });
 		 panel.add(quitButton);
@@ -136,7 +145,6 @@ public class WaitingScreen extends JFrame implements Nextable {
 	
 	public void setServer(ZombieGameServer zgs) {
 		this.server = zgs;
-		this.server.setFrame(this);
 	}
 	public void setClient(ZombieGameClient zgc) {
 		this.client = zgc;
@@ -152,18 +160,10 @@ public class WaitingScreen extends JFrame implements Nextable {
 		sus.setClient(client);
 	}
 	
-	public void updateConnectedPlayersList() {
+	private void updateConnectedPlayersList(){
 		this.connectedPlayersPanel.removeAll();
 		/*iterate through updated list of connected players and add back connectedPlayers via JLabels*/
-		if(this.server != null) {
-			for(ZombieThread zt : this.server.getConnections()) {
-				JLabel label = new JLabel(zt.getPlayerName() + " IP: " + zt.getIP());
-				label.setForeground(Color.WHITE);
-				label.setFont(new Font("Times New Roman",Font.BOLD,20));
-				connectedPlayersPanel.add(label);
-			}
-			panel.add(connectedPlayersPanel);
-		}
+		
 	}
 	
 	public static void main(String [] args){

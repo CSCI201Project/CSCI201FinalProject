@@ -10,8 +10,9 @@ import javax.swing.ImageIcon;
 import project2.GameObject;
 import project2.ObjectId;
 
-public class Ammo extends GameObject {
-	public Ammo(double x, double y, ObjectId id) {
+public class Ammo extends GameObject{
+
+	public Ammo(double x, double y,ObjectId id) {
 		super(id);
 		this.x = x;
 		this.y = y;
@@ -22,14 +23,19 @@ public class Ammo extends GameObject {
 
 	public void render(Graphics g) {
 		// TODO Auto-generated method stub
-		ImageIcon icon = new ImageIcon("images/ammo_box_sprite.png","ammo");
+		ImageIcon icon = new ImageIcon("images/ammo.jpeg","ammo");
 		Image image = icon.getImage();
 		g.drawImage(image, (int)this.x, (int)this.y, null);
 	}
 
-	public void update(Vector<GameObject> objects) {}
+	public void update(Vector<GameObject> objects) {
+		// TODO Auto-generated method stub
+		
+	}
 	public Rectangle getBounds() {
-		return new Rectangle((int) x, (int) y, 50, 50);
+		// TODO Auto-generated method stub
+		return new Rectangle((int) x, (int) y, 50, 50);		
 		//return null;
 	}
+
 }

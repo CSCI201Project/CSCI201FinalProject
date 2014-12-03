@@ -18,7 +18,6 @@ import networking.ZombieGameClient;
 import networking.ZombieGameServer;
 import project2.GameWindow;
 import project2.PlayingField;
-import project2.TimerThread;
 
 public class StartUpScreen extends JFrame implements Nextable {
 
@@ -137,10 +136,8 @@ public class StartUpScreen extends JFrame implements Nextable {
 					server.nextScreen();
 				}
 				
-				GameWindow gw = new GameWindow(new PlayingField(new TimerThread(5)));
+				GameWindow gw = new GameWindow(new PlayingField());
 				gw.setServer(server);
-				gw.setTitle(server.getPlayerName());
-				gw.setLocationRelativeTo(null);
 			}
 			
 		});
@@ -166,7 +163,6 @@ public class StartUpScreen extends JFrame implements Nextable {
 	
 	public void setServer(ZombieGameServer zgs) {
 		this.server = zgs;
-		server.setFrame(this);
 	}
 	public void setClient(ZombieGameClient zgc) {
 		this.client = zgc;
@@ -175,10 +171,8 @@ public class StartUpScreen extends JFrame implements Nextable {
 	public void nextScreen() {
 		setVisible(false);
 	
-		GameWindow gw = new GameWindow(new PlayingField(new TimerThread(5)));
+		GameWindow gw = new GameWindow(new PlayingField());
 		gw.setClient(client, server);
-		gw.setTitle(client.getPlayerName());
-		gw.setLocationRelativeTo(null);
 	}
 	
 	/*takes in a ImageIcon, and the desired scaled dimensions, and returns the scaled image of the

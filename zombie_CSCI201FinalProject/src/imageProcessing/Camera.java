@@ -13,6 +13,8 @@ public class Camera {
 	public void update(PlayerChar player){
 		this.x = -player.getX() + PlayingField.windowWidth/2 - player.getWidth();
 		this.y = -player.getY() + PlayingField.windowHeight/2 - player.getHeight();
+		
+		
 	}
 	public void setX(float x){
 		this.x = x;
@@ -25,5 +27,6 @@ public class Camera {
 	}
 	public double getY(){
 		return this.y;
-	}	
+	}
+	
 }

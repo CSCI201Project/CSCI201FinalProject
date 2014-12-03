@@ -1,17 +1,14 @@
 package characters;
 
-import imageProcessing.Animation;
-import imageProcessing.Texture;
-
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Vector;
 
 import project2.GameObject;
 import project2.ObjectId;
 import project2.PlayingField;
+
 import AStarSearch.AStarTest;
 import AStarSearch.SlickException;
 
@@ -19,9 +16,6 @@ public class AIChar extends Character implements Runnable{
 	private AStarTest search;
 	private PlayerChar target;
 	public int startCol, startRow;
-	private String facing = "right";
-	private Texture texture;
-	private Animation zombieWalk, zombieAttack;
 	
 	public AIChar(double x, double y, ObjectId id) {
 		super(id);
@@ -34,55 +28,19 @@ public class AIChar extends Character implements Runnable{
 		this.startCol = (int)this.x/PlayingField.tileWidth;
 		this.startRow = (int)this.y/PlayingField.tileHeight;
 		search = new AStarTest(this);
-		this.texture = new Texture();
-		this.zombieWalk = new Animation(5, texture.zombieWalkSprites);
-		this.zombieAttack = new Animation(5, texture.zombieAttackSprites);
 	}
 	public void setMap(boolean[][] map){
 		this.search.mapTiles = map;
-		//this.search.printMap();
+		this.search.printMap();
 	}
 	public void render(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g.create();
-		
-		switch(facing) {
-			case "right":
-				g2d.rotate(0, x+19, y+18);
-				break;
-			case "left":
-				g2d.rotate(Math.PI, x+19, y+18);
-				break;
-			case "up":
-				g2d.rotate(3*Math.PI/2, x+19, y+18);
-				break;
-			case "down":
-				g2d.rotate(Math.PI/2, x+19, y+18);
-				break;
-		}
-		zombieWalk.drawAnimation(g2d, (int) x, (int) y);
-		switch(facing) {
-			case "right":
-				g2d.rotate(0, x+19, y+18);
-				break;
-			case "left":
-				g2d.rotate(-Math.PI, x+19, y+18);
-				break;
-			case "up":
-				g2d.rotate(-3*Math.PI/2, x+19, y+18);
-				break;
-			case "down":
-				g2d.rotate(-Math.PI/2, x+19, y+18);
-				break;
-		}
-		
-		
-		g2d.dispose();
+		g.setColor(Color.GREEN);
+		g.fillRect((int)x, (int) y, 38, 38);
 	}
 	public void setTarget(PlayerChar player){
 		this.target = player;
 	}
 	public void update(Vector<GameObject> objects) {
-		zombieWalk.runAnimation();
 	}
 	public void moveAI(int nextCol, int nextRow){
 		int delay = 25;
@@ -90,7 +48,6 @@ public class AIChar extends Character implements Runnable{
 			//Move Down-Right
 			boolean xDone = false, yDone = false;
 			if((nextCol > this.startCol) && (nextRow > this.startRow)){ 
-				facing = "right";
 				while(!xDone && !yDone){
 					if(this.x <= PlayingField.tileWidth*nextCol){
 						this.x += velX;
@@ -110,7 +67,6 @@ public class AIChar extends Character implements Runnable{
 				}
 			}//Move Up-Left
 			else if((nextCol < this.startCol) && (nextRow < this.startRow)){
-				facing = "left";
 				while(!xDone && !yDone){
 					if(this.x >= PlayingField.tileWidth*nextCol){
 						this.x -= velX;
@@ -130,7 +86,6 @@ public class AIChar extends Character implements Runnable{
 				}
 			}//Move Up-Right
 			else if((nextCol > this.startCol) && (nextRow < this.startRow)){
-				facing = "up";
 				while(!xDone && !yDone){
 					if(this.x <= PlayingField.tileWidth*nextCol){
 						this.x += velX;
@@ -150,7 +105,6 @@ public class AIChar extends Character implements Runnable{
 				}
 			}//Move Down-Left
 			else if((nextCol < this.startCol) && (nextRow > this.startRow)){
-				facing = "left";
 				while(!xDone && !yDone){
 					if(this.x >= PlayingField.tileWidth*nextCol){
 						this.x -= velX;
@@ -173,7 +127,6 @@ public class AIChar extends Character implements Runnable{
 		else if(this.startCol != nextCol){//Move Horizontally
 			//Move Right
 			if(nextCol > this.startCol){
-				facing = "right";
 				while(this.x <= PlayingField.tileWidth*nextCol){
 					
 					this.x += velX;
@@ -184,8 +137,8 @@ public class AIChar extends Character implements Runnable{
 					}
 				}
 			}else{ //Move Left
-				facing = "left";
 				while(this.x >= PlayingField.tileWidth*nextCol){
+					
 					this.x -= velX;
 					try {
 						Thread.sleep(delay);
@@ -198,8 +151,8 @@ public class AIChar extends Character implements Runnable{
 		else if(this.startRow != nextRow){//Move Vertically
 			//Move Down
 			if(nextRow > this.startRow){
-				facing = "down";
 				while(this.y <= PlayingField.tileHeight*nextRow){
+					
 					this.y += velY;
 					try {
 						Thread.sleep(delay);
@@ -208,8 +161,8 @@ public class AIChar extends Character implements Runnable{
 					}
 				}
 			}else{ //Move Up
-				facing = "up";
 				while(this.y >= PlayingField.tileHeight*nextRow){
+					
 					this.y -= velY;
 					try {
 						Thread.sleep(delay);
@@ -224,7 +177,7 @@ public class AIChar extends Character implements Runnable{
 	}
 	
 	public void run() {
-		while(isOn){
+		while(true){
 			if (health <= 0){
 				this.turnOff();
 				break;
@@ -245,11 +198,11 @@ public class AIChar extends Character implements Runnable{
 					}else{
 						search.updatePath(this.startCol, this.startRow, targetCol, targetRow);
 						search.updateLocation();
-						//TODO no such element exception
 					}
 			} catch (SlickException e) {
 	            //System.out.println(e.getMessage());
-	        }
+	         }
+			
 		}
 	}
 	
@@ -257,3 +210,4 @@ public class AIChar extends Character implements Runnable{
 		return new Rectangle((int)x, (int)y, width, height);
 	}
 }
+

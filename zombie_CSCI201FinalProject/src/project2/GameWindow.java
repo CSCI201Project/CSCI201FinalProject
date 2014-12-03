@@ -1,20 +1,21 @@
 package project2;
 
-import gui.EndOfGameScreen;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import weapons.Bullet;
 import characters.AIChar;
 import characters.PlayerChar;
-import networking.ChatPanel;
+import networking.ChatClient;
 import networking.ServerBullet;
 import networking.ServerBulletList;
 import networking.ServerPlayerObject;
@@ -23,9 +24,6 @@ import networking.ZombieGameClient;
 import networking.ZombieGameServer;
 
 public class GameWindow extends JFrame {
-	private static final long serialVersionUID = -32699482126612972L;
-
-	private ChatPanel chatPanel;
 	private PlayingField pf;
 //	public JFrame frame = this;
 	
@@ -40,14 +38,18 @@ public class GameWindow extends JFrame {
 		this.setMinimumSize(new Dimension(800,600));
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
-		chatPanel = new ChatPanel(this);
+		
+		ChatClient chatPanel = new ChatClient("localhost", 5555);
+//		chatPanel.add(label);
+//		chatPanel.setPreferredSize(new Dimension(300,300));
+//		this.add(chatPanel);
+		
 		System.out.println("width and height: " + this.getWidth() + " " + this.getPreferredSize().height);
-		chatPanel.setPreferredSize(new Dimension((int) (this.getWidth() * 0.225), this.getHeight()));
+		chatPanel.setPreferredSize(new Dimension(300,this.getHeight()));
+//		chatPanel.setPreferredSize(new Dimension(300,600));
 		this.add(chatPanel, BorderLayout.EAST);
 		
 		this.pf = pf;
-		this.pf.setGameWindow(this);
 		this.add(this.pf); 
 		
 		this.setVisible(true);
@@ -71,9 +73,6 @@ public class GameWindow extends JFrame {
 			public void windowActivated(WindowEvent arg0) {}
 		});
 	}
-	public void getFocus() {
-		pf.requestFocusInWindow();
-	}
 	
 	public void setServer(ZombieGameServer zgs) {
 		this.isHost = true;
@@ -91,13 +90,6 @@ public class GameWindow extends JFrame {
 		pf.setClient(this.client, this.server);
 	}
 	
-	//from pf
-	public void endGame(boolean survivorsWin) {
-		this.setVisible(false);
-		EndOfGameScreen eogs = new EndOfGameScreen(survivorsWin);
-	}
-	
-	//game
 	public void updateZombieGameObject(ServerZombieObject szo) {
 		if(!isHost) {
 			Vector<GameObject> gs = pf.getGameObjectHandler().getObjects();
@@ -110,10 +102,6 @@ public class GameWindow extends JFrame {
 					if(ai.iterator == szo.getIterator()) {
 						g.setX(szo.getX());
 						g.setY(szo.getY());
-						
-						g.setVelX(szo.getVelX());
-						g.setVelY(szo.getVelY());
-						
 						ai.setHealth(szo.getHealth());
 						
 						if(szo.getHealth() <= 0)
@@ -152,13 +140,10 @@ public class GameWindow extends JFrame {
 	
 	public void createPlayer(ServerPlayerObject spo) {
 		pf.getGameObjectHandler().addPlayer(new PlayerChar(spo.getName(), spo.getX(), spo.getY(), ObjectId.HumanSurvivor));
-		chatPanel.addPlayerName(spo.getName());
 	}
 	public void syncPlayer(ServerPlayerObject spo) {
 		for(PlayerChar pc : pf.getGameObjectHandler().getPlayers()) {
 			if(pc.getName() == spo.getName()) {
-				pc.setID(spo.getID());
-				
 				pc.setX(spo.getX());
 				pc.setY(spo.getY());
 				
@@ -167,47 +152,21 @@ public class GameWindow extends JFrame {
 			}
 		}
 	}
-	
-	//chat panel
-	public void receiveMessageFrom(String sender, String message) {
-		chatPanel.receiveMessage(sender, message);
-	}
-	
-	public void sendMessageAll(String message) {
-		for(String n : this.server.getPlayerNames()) {
-			if(!n.equals(pf.getPlayerName()))
-				sendMessageTo(n, message);
-		}
-	}
-	public void sendMessageTo(String recipient, String message) {
-		this.server.sendMessageToFrom(recipient, pf.getPlayerName(),message);
-	}
 
-	//main
 	public static void main(String[] args){
-		//server + clients
 		ZombieGameServer zgs = new ZombieGameServer(80);
 		zgs.setPlayerName("Chris");
 		ZombieGameClient zgc1 = new ZombieGameClient("localhost", 80);
 		zgc1.setPlayerName("Fuckboy");
-		ZombieGameClient zgc2 = new ZombieGameClient("localhost", 80);
-		zgc2.setPlayerName("Buster");
+//		ZombieGameClient zgc2 = new ZombieGameClient("localhost", 80);
+//		zgc2.setPlayerName("Buster");
 		
-		//windows
-		GameWindow g1 = new GameWindow(new PlayingField(new TimerThread(5)));
+		GameWindow g1 = new GameWindow(new PlayingField());
 		g1.setServer(zgs);
-		g1.setTitle(zgs.getPlayerName());
-		g1.setLocation(0, 0);
-		
-		GameWindow g2 = new GameWindow(new PlayingField(new TimerThread(5)));
+		GameWindow g2 = new GameWindow(new PlayingField());
 		g2.setClient(zgc1, zgs);
-		g2.setTitle(zgc1.getPlayerName());
-		g2.setLocation(450, 225);
-		
-		GameWindow g3 = new GameWindow(new PlayingField(new TimerThread(5)));
-		g3.setClient(zgc2, zgs);
-		g3.setTitle(zgc2.getPlayerName());
-		g3.setLocation(900, 450);
+//		GameWindow g3 = new GameWindow(new PlayingField());
+//		g3.setClient(zgc2, zgs);
 	}
 }
 
