@@ -11,8 +11,7 @@ import project2.GameObject;
 import project2.ObjectId;
 
 public class Gun extends GameObject{
-
-	public Gun(double x, double y,ObjectId id) {
+	public Gun(double x, double y, ObjectId id) {
 		super(id);
 		this.x = x;
 		this.y = y;
@@ -22,20 +21,13 @@ public class Gun extends GameObject{
 	}
 
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
 		ImageIcon icon = new ImageIcon("images/shotgun_sprite.png","shotgun");
 		Image image = icon.getImage();
 		g.drawImage(image, (int)this.x, (int)this.y, null);
 	}
 
-	public void update(Vector<GameObject> objects) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void update(Vector<GameObject> objects) {}
 	public Rectangle getBounds() {
-		// TODO Auto-generated method stub
 		return new Rectangle((int) x, (int) y, 50, 50);		
-		//return null;
 	}
-
 }

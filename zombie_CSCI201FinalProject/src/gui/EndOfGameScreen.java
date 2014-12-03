@@ -11,32 +11,39 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class EndOfGameScreen extends JFrame {
+import networking.ZombieGameClient;
+import networking.ZombieGameServer;
 
-	/**
-	 * 
-	 */
+public class EndOfGameScreen extends JFrame {
 	private static final long serialVersionUID = -2439031398254320921L;
 	private int countDownTimer = 10;
 	private JLabel countDownLabel = new JLabel();
 	private PanelBackground mainPanel;
 	
-	public EndOfGameScreen(){
+	private boolean isHost;
+	private ZombieGameServer server;
+	private ZombieGameClient client;
+	
+	public EndOfGameScreen(boolean survivorsWin) {
 		super("End Of Game Screen");
 		this.setSize(800, 600);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.add(setupGUI());
+		this.add(setupGUI(survivorsWin));
 		this.setVisible(true);
 		this.startCountDownTimer();
 	}
 	
-	private JPanel setupGUI(){
+	private JPanel setupGUI(boolean survivorsWin) {
 	    mainPanel = new PanelBackground(3);
 		mainPanel.setLayout(null);
 		
 		/*Winner label that will eventually display team that won the game*/
-		JLabel teamWonLabel = new JLabel("____ win!");
+		JLabel teamWonLabel;
+		
+		if(survivorsWin) teamWonLabel = new JLabel("Survivors win!");
+		else teamWonLabel = new JLabel("Zombies win!");
+		
 		teamWonLabel.setForeground(Color.WHITE);
 		teamWonLabel.setFont(new Font("Times New Roman",Font.BOLD,32));
 		teamWonLabel.setBounds(300, 0, 275, 50);
@@ -93,13 +100,32 @@ public class EndOfGameScreen extends JFrame {
 				e.printStackTrace();
 			}
 		}
+		
 		/*At This point, the counter is 0, everyone that is still connected should be taken back
 		 * to the login screen so that they can play again
 		 */
+		this.setVisible(false);
+		
+		StartUpScreen sus = new StartUpScreen(this.isHost);
+		if(this.isHost) sus.setServer(this.server);
+		else sus.setClient(this.client);
+	}
+	
+	public void setServer(ZombieGameServer zgs) {
+		this.isHost = true;
+		this.server = zgs;
+		this.server.setFrame(this);
+	}
+	public void setClient(ZombieGameClient zgc) {
+		this.isHost = false;
+		this.client = zgc;
+		this.client.setFrame(this);
 	}
 	
 	public static void main(String [] args){
-		new EndOfGameScreen();
+		EndOfGameScreen eogs = new EndOfGameScreen(false);
+//		eogs.setServer(new ZombieGameServer(80));
+//		eogs.setClient(new ZombieGameClient("localhost", 80));
 	}
 	
 }

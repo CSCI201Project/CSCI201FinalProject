@@ -1,6 +1,7 @@
 package imageProcessing;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class Animation {
@@ -31,8 +32,8 @@ public class Animation {
 		}
 	}
 	
-	public void drawAnimation(Graphics g, int x, int y) {
-		g.drawImage(currentImg, x, y, null);
+	public void drawAnimation(Graphics2D g2d, int x, int y) {
+		g2d.drawImage(currentImg, x, y, null);
 	}
 	
 	private void nextFrame() {

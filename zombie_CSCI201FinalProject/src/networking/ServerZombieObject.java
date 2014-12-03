@@ -6,6 +6,7 @@ public class ServerZombieObject implements Serializable {
 	private static final long serialVersionUID = 4L;
 
 	private double x, y;
+	private double velx, vely;
 	private int health;
 	private int i;
 	
@@ -16,12 +17,13 @@ public class ServerZombieObject implements Serializable {
 		this.i = i;
 	}
 	
-	public double getX() {
-		return this.x;
-	}
-	public double getY() {
-		return this.y;
-	}
+	public double getX() { return this.x; }
+	public double getY() { return this.y; }
+	
+	public double getVelX() { return this.velx; }
+	public double getVelY() { return this.vely; }
+	public void setVelX(double velx) { this.velx = velx; }
+	public void setVelY(double vely) { this.vely = vely; }
 	
 	public int getHealth() {
 		return this.health;

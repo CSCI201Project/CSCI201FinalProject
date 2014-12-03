@@ -1,9 +1,13 @@
 package networking;
 
+import gui.WaitingScreen;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
+
+import javax.swing.JFrame;
 
 import characters.PlayerChar;
 import project2.GameObject;
@@ -13,6 +17,8 @@ import weapons.Bullet;
 
 public class ZombieGameServer extends Thread {
 	private GameWindow gameFrame;
+	private JFrame currentFrame;
+	
 	private Vector<ZombieThread> ztVector = new Vector<ZombieThread>();
 	private ServerSocket ss;
 	private boolean done = false;
@@ -40,10 +46,13 @@ public class ZombieGameServer extends Thread {
 				s.setSoTimeout(20000);
 				s.setReceiveBufferSize(100000);
 				s.setSendBufferSize(100000);
+				s.setKeepAlive(true);
 				
 				ZombieThread zt = new ZombieThread(s, this);
 				ztVector.add(zt);
 				zt.start();
+				
+				refreshScreen();
 			}
 			
 			for(ZombieThread zt : ztVector) {
@@ -56,11 +65,24 @@ public class ZombieGameServer extends Thread {
 		}
 	}
 	
+	//gui
 	public void nextScreen() {
 		for(ZombieThread z : ztVector) {
 			z.nextScreen();
 		}
 	}
+	public void refreshScreen() {
+		WaitingScreen w = (WaitingScreen) currentFrame;
+		if(w != null) {
+			w.updateConnectedPlayersList();
+		}
+		
+		for(ZombieThread z : ztVector) {
+			z.refreshScreen();
+		}
+	}
+	
+	//game
 	public void updateObjects(Vector<GameObject> gameObjects) {
 		ServerBulletList sbl = new ServerBulletList();
 		
@@ -83,8 +105,11 @@ public class ZombieGameServer extends Thread {
 		}
 	}
 	
-	public int getConnections() {
+	public int getNumberConnections() {
 		return ztVector.size();
+	}
+	public Vector<ZombieThread> getConnections() {
+		return ztVector;
 	}
 	
 	public void createBullet(ServerBullet sb) {
@@ -105,7 +130,7 @@ public class ZombieGameServer extends Thread {
 		sendPlayer(pc, false);
 	}
 	public void sendPlayer(PlayerChar pc, boolean init) {
-		ServerPlayerObject spo = new ServerPlayerObject(pc.getX(), pc.getY(), pc.getName(), init);
+		ServerPlayerObject spo = new ServerPlayerObject(pc.getX(), pc.getY(), pc.getName(), pc.getID(), init);
 		spo.setVelX(pc.getVelX());
 		spo.setVelY(pc.getVelY());
 		
@@ -130,14 +155,40 @@ public class ZombieGameServer extends Thread {
 		}
 	}
 	
+	public void sendMessageToFrom(String recipient, String sender, String message) {
+		for(ZombieThread zt : ztVector)  {
+			if(zt.getPlayerName().equals(recipient))
+				zt.handleMessage(new ServerChatMessage(recipient, sender, message));
+		}
+	}
+	
 	public void setGameFrame(GameWindow gw) {
 		this.gameFrame = gw;
 	}
+	public void setFrame(JFrame f) {
+		this.currentFrame = f;
+	}
+	public JFrame getFrame() {
+		return this.currentFrame;
+	}
+
 	public void setPlayerName(String pn) {
 		this.playerName = pn;
 	}
 	public String getPlayerName() {
 		return this.playerName;
+	}
+	
+	public Vector<String> getPlayerNames() {
+		Vector<String> pn = new Vector<String>();
+		
+		pn.add(getPlayerName());
+		for(ZombieThread zt : ztVector) {
+			if(zt.getPlayerName() != null)
+				pn.add(zt.getPlayerName());
+		}
+		
+		return pn;
 	}
 	
 	public void close() {

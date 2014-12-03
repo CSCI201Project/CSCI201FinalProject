@@ -1,41 +1,41 @@
 package project2;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
+import java.util.Vector;
 
 public class TimerThread extends Thread{
-	private int totalTime;
-	private int numMinutes;
-	private Timer timer;
-	
+	private long startTime;
+	private long lapTime;
+	private long ns = 1000000000;
+	public int numSecs;
+	public int minRemaining;
+	public int secsRemaining;
 	public TimerThread(int numMinutes){
-		this.numMinutes = numMinutes;
-		convertToMilliSecs();
+		this.numSecs = numMinutes * 60;
 	}
 	public void run(){
-		ActionListener taskPerformer = new ActionListener() {
-		      public void actionPerformed(ActionEvent evt) {
-		    	  //performs this after timer
-		      }
-		};
-		timer = new Timer(totalTime, taskPerformer);
-		timer.setRepeats(false);
-		timer.start(); 
-		while(timer.isRunning()){
-			//if(timer.)
+		startTime = System.nanoTime();
+		
+		while(!timerDone()){
+			long tempTime = System.nanoTime();
+			
+			if((tempTime - startTime)/ns > 1){
+				startTime +=ns;
+				numSecs--;
+				this.minRemaining = numSecs/60;
+				this.secsRemaining = numSecs%60;
+			}
 		}
 		
+		
 	}
-	public void convertToMilliSecs(){
-		int minute = 60000; //milliseconds
-		this.totalTime = minute * this.numMinutes;
+	public boolean timerDone(){
+		return 0 == this.numSecs;
 	}
-	public void endSimulation(){
+	public long getRunTime(){
+		return (lapTime - startTime)/ns;
 	}
-	public static void main(String[] args ){
-		TimerThread tt = new TimerThread(2);
-		tt.start();
+	public static void main(String[] args){
+		TimerThread timer = new TimerThread(1);
+		timer.start();
 	}
 }

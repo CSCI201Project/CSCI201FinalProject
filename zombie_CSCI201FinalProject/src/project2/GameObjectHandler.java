@@ -3,14 +3,9 @@ package project2;
 import imageProcessing.Camera;
 
 import java.awt.Graphics;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
-import networking.ServerBullet;
 import weapons.Bullet;
 import characters.AIChar;
 import characters.PlayerChar;
@@ -20,26 +15,34 @@ public class GameObjectHandler {
 	private Vector<GameObject> objects = new Vector<GameObject>();
 	private Vector<GameObject> bullets = new Vector<GameObject>();
 	private Vector<PlayerChar> players = new Vector<PlayerChar>();
+	private PlayingField pf;
+	private int zombieCounter = 0;
+	private boolean canSpawn = true;
 	protected PlayerChar player;
+	protected int maxZombies = 40;
 	public double startX, startY;
 	protected int fieldTileX, fieldTileY;
 
 	private Vector<GameObject> tempBullets = new Vector<GameObject>();
-	private PlayingField parent;
 	public boolean isHost;
 	
-	public GameObjectHandler(int x, int y, PlayingField parent){
+	public GameObjectHandler(int x, int y){
 		this.fieldTileX = x;
 		this.fieldTileY = y;
-		this.parent = parent;
+	}
+	public void setPlayingField(PlayingField pf) {
+		this.pf = pf;
+	}
+	public PlayingField getPlayingField(){
+		return this.pf;
 	}
 	public void init(boolean [][] map){
-		player = new PlayerChar(parent.getPlayerName(), startX, startY, ObjectId.HumanSurvivor);		
+		player = new PlayerChar(pf.getPlayerName(), startX, startY, ObjectId.HumanSurvivor);		
 		this.addObject(player);
 		this.sendMapToAI(map);
 		player.setHandler(this);
 		
-		parent.initializePlayer(player);
+		pf.initializePlayer(player);
 	}
 	public void sendMapToAI(boolean [][] map){
 		for(int i = 0; i < this.objects.size(); i ++){
@@ -63,6 +66,7 @@ public class GameObjectHandler {
 			}
 		}
 	}
+	
 	public Vector<GameObject> getObjects(){
 		return objects;
 	}
@@ -79,6 +83,7 @@ public class GameObjectHandler {
 	public PlayerMovement getController(){
 		return player.getKeyAdapter();
 	}
+	
 	public void update(Camera cam) {
 		//update ai targets
 		if(isHost) {
@@ -123,8 +128,19 @@ public class GameObjectHandler {
 		//objects
 		for(Iterator<GameObject> iterator = objects.iterator(); iterator.hasNext();) {
 			GameObject object = iterator.next();
+			
+			if(object instanceof AIChar)
+				zombieCounter++;
+			
 			if(!object.isOn) { iterator.remove(); continue; }
 			object.update(objects);
+		}
+		
+		if(zombieCounter >= this.maxZombies) {
+			canSpawn = false;
+		} else {
+			canSpawn = true;
+			zombieCounter = 0;
 		}
 		
 		//players
@@ -135,7 +151,10 @@ public class GameObjectHandler {
 		}
 		
 		cam.update(player);
-		parent.syncPlayer(player);
+		pf.syncPlayer(player);
+	}
+	public boolean canSpawnZombies(){
+		return this.canSpawn;
 	}
 	public void render(Graphics g) {
 		for(GameObject bullet : bullets) {
@@ -147,18 +166,16 @@ public class GameObjectHandler {
 		}
 		
 		for(PlayerChar player : players) {
-			player.render(g);
+			player.render(g, false);
 		}
 	}
 	public void addBullets(Bullet b) {
 		tempBullets.add(b);
 		
 		if(!isHost) {
-			if(parent != null && b != null)
-				parent.transferBullet(b);
+			if(pf != null && b != null)
+				pf.transferBullet(b);
 		}
-
-		//b.iterator = bullets.size() - 1;
 	}
 	public void addPlayer(PlayerChar pc) {
 		//this.objects.add(pc);

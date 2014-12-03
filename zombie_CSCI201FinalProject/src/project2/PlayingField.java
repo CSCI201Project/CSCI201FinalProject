@@ -12,6 +12,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -22,17 +24,29 @@ import networking.ZombieGameClient;
 import networking.ZombieGameServer;
 import weapons.Ammo;
 import weapons.Bullet;
+import weapons.Gun;
+import weapons.Rifle;
 import characters.AIChar;
 import characters.PlayerChar;
+import characters.Zombie;
 import AStarSearch.AStarTest;
 
-public class PlayingField extends Canvas implements Runnable{
+public class PlayingField extends Canvas implements Runnable {
+	private GameWindow parent;
+	boolean done = false;
+	
 	static public int windowWidth;
 	static public int windowHeight;
+	private TimerThread timer;
 	private GameObjectHandler gameObjects;
 	private BufferedImage level = null;
 	private AStarTest mainMap;
+	public static ArrayList<AIChar> AIList = new ArrayList<>();
 	private Camera cam;
+	private Random rand;
+	private int counter = 0;
+	private int spawnDelay = 5;
+	private int alphaSpawnDelay = 10;
 	static public int tileHeight = 55;
 	static public int tileWidth = 55;
 	
@@ -42,17 +56,62 @@ public class PlayingField extends Canvas implements Runnable{
 	
 	private int aiIterator = 0;
 	
-	public PlayingField(){
+	public PlayingField(TimerThread timer) {
+		this.timer = timer;		
+		this.rand = new Random();				
 		this.setBackground(Color.BLACK);
-		gameObjects = new GameObjectHandler(tileWidth,tileHeight, this);
+		gameObjects = new GameObjectHandler(tileWidth,tileHeight);
+		gameObjects.setPlayingField(this);
 		this.mainMap = new AStarTest(new AIChar(0,0,ObjectId.NormalZombie)); //This AI is not actually used
 		
-		for(int i = 0; i<mainMap.width; i++){
-			for(int j = 0; j<mainMap.height;j++){
+		for(int i = 0; i<mainMap.width; i++) {
+			for(int j = 0; j<mainMap.height; j++) {
 				mainMap.mapTiles[i][j] = true;
 			}
 		}
 	}
+	public void setGameWindow(GameWindow gw) {
+		this.parent = gw;
+	}
+	
+	public GameObjectHandler getGameObjectHandler(){
+		return this.gameObjects;
+	}
+	public static void removeKeyListener(PlayingField pf, PlayerChar player){
+		pf.removeKeyListener(player.getKeyAdapter());
+	}
+	public static void addKeyListener(PlayingField pf, PlayerChar player){
+		pf.addKeyListener(player.getKeyAdapter());
+	}
+	
+	private void spawnZombies(){
+		if(this.gameObjects.canSpawnZombies()){
+			int numZombies = 2;
+			for(int i = 0; i < numZombies; i++){
+				boolean zombieSpawned = false;
+				while(!zombieSpawned){
+					int col = this.rand.nextInt(this.mainMap.width);
+					int row = this.rand.nextInt(this.mainMap.height);
+					
+					if(mainMap.mapTiles[col][row] == true){
+						zombieSpawned = true;
+						Zombie tempZombie = new Zombie(col*this.tileWidth, row*this.tileHeight, ObjectId.NormalZombie);
+						tempZombie.iterator = aiIterator;
+						aiIterator++;
+						
+						this.gameObjects.addObject(tempZombie);
+						tempZombie.setMap(this.mainMap.mapTiles);
+						tempZombie.setTarget(this.gameObjects.player);
+						System.out.println("ZOMBIE ADDED!!");
+						
+						Thread t = new Thread(tempZombie);
+						t.start();
+					}
+				}
+			}
+		}
+	}
+	
 	private void init(){
 		windowWidth = this.getWidth();
 		windowHeight = this.getHeight();
@@ -62,7 +121,8 @@ public class PlayingField extends Canvas implements Runnable{
 		LoadImageMap(level);
 		gameObjects.init(mainMap.mapTiles);
 		this.cam = new Camera(0,0);
-		this.addKeyListener(gameObjects.getController());
+		PlayingField.addKeyListener(this, gameObjects.player);
+		gameObjects.startAI();
 		
 		/*for(int i = 0; i < this.server.getConnections(); i++)
 			gameObjects.addPlayer(new PlayerChar("fuck", gameObjects.startX, gameObjects.startY, ObjectId.HumanSurvivor));*/
@@ -108,10 +168,6 @@ public class PlayingField extends Canvas implements Runnable{
 		gameObjects.isHost = false;
 	}
 	
-	public GameObjectHandler getGameObjectHandler() {
-		return gameObjects;
-	}
-	
 	public void run() {
 		this.init();
 		
@@ -125,7 +181,7 @@ public class PlayingField extends Canvas implements Runnable{
 		int updates = 0;
 		int frames = 0;
 		
-		while(true){
+		while(!done){
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -147,11 +203,30 @@ public class PlayingField extends Canvas implements Runnable{
 	}
 
 	private void update() {
+		this.counter++;
+		if(this.counter == (this.spawnDelay*60)) {
+			this.spawnZombies();
+			this.counter = 0;
+		}
+		
 		gameObjects.update(cam);
 		
-		if(isHost) {
+		if(isHost) {			
 			server.updateObjects(gameObjects.getBullets());
 			server.updateObjects(gameObjects.getObjects());
+		}
+		
+		if(timer.timerDone()) {
+			done = true;
+			for(GameObject g : gameObjects.getObjects()) {
+				if(g.getID() == ObjectId.NormalZombie || g.getID() == ObjectId.AlphaZombie) {
+					AIChar ai = (AIChar) g;
+					g.turnOff();
+				}
+			}
+			
+			//if(survivors)
+			parent.endGame(true);
 		}
 	}
 	
@@ -160,6 +235,7 @@ public class PlayingField extends Canvas implements Runnable{
 		if(bs == null){
 			final int NUM_BUFFERS = 3;
 			this.createBufferStrategy(NUM_BUFFERS);
+			this.timer.start();
 			return;
 		}
 		
@@ -174,32 +250,19 @@ public class PlayingField extends Canvas implements Runnable{
 		gameObjects.render(g);//Most rendering happens here
 		g2d.translate(-cam.getX(),-cam.getY());
 		
-		//HUD Information
+		//Time Display Information
 		g.setFont(new Font("Arial",Font.BOLD, 18));
 		g.setColor(Color.WHITE);
-		g.drawString("Time Left:", this.getWidth()/2 - 38, 25);
-		
-		g.setFont(new Font("Arial",Font.BOLD, 14));
-		g.drawString("Survivors Left: 3", 20, 23);
-		
-		if(gameObjects.player.getHealth() > 80)
-			g.setColor(Color.GREEN);
-		else if(gameObjects.player.getHealth() > 20)
-			g.setColor(Color.WHITE);
+		if(timer.numSecs < 60)
+			g.setColor(Color.red);
+		if(timer.secsRemaining < 10)
+			g.drawString(this.timer.minRemaining+":0"+this.timer.secsRemaining, this.getWidth()/2 - 10, 45);
 		else
-			g.setColor(Color.RED);
-		g.setFont(new Font("Arial",Font.BOLD, 14));
-		g.drawString("Health: "+gameObjects.player.getHealth(), this.getWidth() - 100, 23);
-		
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("Arial",Font.BOLD, 14));
-		g.drawString("Current Weapon", this.getWidth() - 130, this.getHeight() - 80);
-		g.drawString("30/90", this.getWidth() - 92, this.getHeight() - 30);
-		ImageIcon icon = new ImageIcon("images/rifle_sprite.png","gun");
-		Image image = icon.getImage();
-		g.drawImage(image, this.getWidth() - 115, this.getHeight() - 75, null);
+			g.drawString(this.timer.minRemaining+":"+this.timer.secsRemaining, this.getWidth()/2 - 10, 45);
 		////////////
+		
 		g.dispose();
+		g2d.dispose();
 		bs.show();
 	}
 	private void LoadImageMap(BufferedImage image){
@@ -237,10 +300,18 @@ public class PlayingField extends Canvas implements Runnable{
 					AIChar ai = new AIChar(col*this.tileWidth, row*this.tileHeight, ObjectId.NormalZombie);
 					ai.iterator = aiIterator;
 					aiIterator++;
+					
+					AIList.add(ai);
 					gameObjects.addObject(ai);
 				}
 				else if (red == 0 && green == 0 && blue == 255){
 					gameObjects.addObject(new Ammo(col*this.tileWidth, row*this.tileHeight, ObjectId.Ammo));
+				}
+				else if (red == 0 && green ==255  && blue == 255){
+					gameObjects.addObject(new Rifle(col*this.tileWidth, row*this.tileHeight, ObjectId.Rifle));
+				}
+				else if (red == 255 && green == 0 && blue == 255){
+					gameObjects.addObject(new Gun(col*this.tileWidth, row*this.tileHeight, ObjectId.Shotgun));
 				}
 				else if(red == 255 && green == 106 && blue == 0){
 					gameObjects.startX = col*this.tileWidth;

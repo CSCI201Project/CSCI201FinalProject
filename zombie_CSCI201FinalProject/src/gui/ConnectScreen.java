@@ -20,14 +20,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import networking.ChatClient;
-
 import networking.ZombieGameClient;
 import networking.ZombieGameServer;
 
 public class ConnectScreen extends JFrame {
-
 	private static final long serialVersionUID = 8718869258020517546L;
+	
 	private JFrame frame = this;
 	private PanelBackground panel;
 	private JTextField playerNameTextField;
@@ -52,10 +50,10 @@ public class ConnectScreen extends JFrame {
 		panel.setLayout(null);
 		
 		/*Game Title*/
-		JLabel titleLabel = new JLabel("Game Title");
+		JLabel titleLabel = new JLabel("Z0mb13 B01s");
 		titleLabel.setForeground(Color.WHITE);
 		titleLabel.setFont(new Font("Times New Roman",Font.BOLD,48));
-		titleLabel.setBounds(280, 0, 300, 50);
+		titleLabel.setBounds(260, 0, 300, 50);
 		panel.add(titleLabel);
 		
 		/*Welcome Player Label*/
@@ -109,7 +107,7 @@ public class ConnectScreen extends JFrame {
 		/*Create Button*/
 		JButton createButton = new JButton("Create");
 		createButton.setFont(new Font("Times New Roman",Font.BOLD,20));
-		createButton.setBounds(145, 500, 125, 45);
+		createButton.setBounds(205, 500, 125, 45);
 		createButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -120,7 +118,6 @@ public class ConnectScreen extends JFrame {
 				
 				//start server
 				ZombieGameServer zgs = new ZombieGameServer(Integer.parseInt(portTextField.getText()));
-				ChatClient chatPanel = new ChatClient("localhost", 5555);
 				//set name
 				String pn = playerNameTextField.getText();
 				if(!pn.equals(""))
@@ -141,7 +138,7 @@ public class ConnectScreen extends JFrame {
 		/*Connect Button*/
 		JButton connectButton = new JButton("Connect");
 		connectButton.setFont(new Font("Times New Roman",Font.BOLD,20));
-		connectButton.setBounds(275, 500, 125, 45);		
+		connectButton.setBounds(335, 500, 125, 45);		
 		connectButton.addActionListener(new ActionListener(){
 
 			@Override
@@ -157,10 +154,15 @@ public class ConnectScreen extends JFrame {
 				String ipAddress = ipAddressTextField.getText();
 				int port = Integer.parseInt(portTextField.getText());
 				
+				/*After the client has connected to the server, stop the sound, and load up waiting screen*/
+				swampSound.stopSound();
+				//swampSound.closeAudioFile();
+				frame.setVisible(false);
+				
+				WaitingScreen ws = new WaitingScreen(false);
+				
 				//start client
 				ZombieGameClient zgc = new ZombieGameClient(ipAddress, port);
-				ChatClient chatPanel = new ChatClient(ipAddress, 5555);
-				zgc.setFrame(frame);
 				//setname
 				String pn = playerNameTextField.getText();
 				if(!pn.equals(""))
@@ -168,13 +170,8 @@ public class ConnectScreen extends JFrame {
 				else
 					zgc.setPlayerName("Player" + zgc.getId());
 				
-				/*After the client has connected to the server, stop the sound, and load up waiting screen*/
-				swampSound.stopSound();
-				//swampSound.closeAudioFile();
-				frame.setVisible(false);
-				
-				WaitingScreen ws = new WaitingScreen(false);
 				ws.setClient(zgc);
+				zgc.setFrame(ws);
 			}
 			
 		});
@@ -184,7 +181,7 @@ public class ConnectScreen extends JFrame {
 		/*Quit Button*/
 		JButton quitButton = new JButton("Quit");
 		quitButton.setFont(new Font("Times New Roman",Font.BOLD,20));
-		quitButton.setBounds(405, 500, 125, 45);
+		quitButton.setBounds(465, 500, 125, 45);
 		quitButton.addActionListener(new ActionListener(){
 
 			@Override

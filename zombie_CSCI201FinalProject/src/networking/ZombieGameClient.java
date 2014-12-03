@@ -1,6 +1,7 @@
 package networking;
 
 import gui.Nextable;
+import gui.WaitingScreen;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,7 +22,7 @@ public class ZombieGameClient extends Thread {
 	
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
-	
+
 	private JFrame currentFrame;
 	private GameWindow gameFrame;
 	private String playerName;
@@ -73,7 +74,7 @@ public class ZombieGameClient extends Thread {
 	}
 	private void sendPlayer(PlayerChar pc, boolean init) {
 		try {
-			ServerPlayerObject spo = new ServerPlayerObject(pc.getX(), pc.getY(), pc.getName(), init);
+			ServerPlayerObject spo = new ServerPlayerObject(pc.getX(), pc.getY(), pc.getName(), pc.getID(), init);
 			spo.setVelX(pc.getVelX());
 			spo.setVelY(pc.getVelY());
 			oos.writeObject(spo);
@@ -91,6 +92,13 @@ public class ZombieGameClient extends Thread {
 			while(!done) {
 				Object o = ois.readObject();
 				if(o != null) {
+					if(o instanceof ServerChatMessage) {
+						ServerChatMessage scm = (ServerChatMessage) o;
+						if(o != null) {
+							gameFrame.receiveMessageFrom(scm.getSender(), scm.getMessage());
+						}
+					}
+					
 					if(o instanceof ServerZombieObject) {
 						ServerZombieObject szo = (ServerZombieObject) o;
 						if(szo != null) {
@@ -118,15 +126,16 @@ public class ZombieGameClient extends Thread {
 						String messageFromServer = (String) o;
 						
 						if(messageFromServer != null) {
-							if(messageFromServer.equals("FUCK")) {
-								System.out.println("FUCK");
-							}
-							if(messageFromServer.equals("CONNECT")) {
-								//todo
-							}
+							if(messageFromServer.equals("CONNECT")) {}
 							else if(messageFromServer.equals("NEXTSCREEN")) {
 								Nextable w = (Nextable) currentFrame; 
 								w.nextScreen();
+							}
+							else if(messageFromServer.equals("REFRESHSCREEN")) {
+								WaitingScreen w = (WaitingScreen) currentFrame;
+								if(w != null) {
+									w.updateConnectedPlayersList();
+								}
 							}
 						}
 					}
@@ -148,7 +157,7 @@ public class ZombieGameClient extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setFrame(JFrame f) {
 		this.currentFrame = f;
 	}

@@ -3,8 +3,6 @@ package weapons;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Vector;
@@ -13,9 +11,9 @@ import characters.Character;
 import project2.GameObject;
 import project2.ObjectId;
 
-public class Bullet extends GameObject implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+public class Bullet extends GameObject implements Serializable {	
+	private static final long serialVersionUID = 840682202075683150L;
+
 	String direction;
 	int damage;
 	boolean isSlug;
@@ -38,15 +36,22 @@ public class Bullet extends GameObject implements Serializable {
 		double speed = 7;
 		switch(direction) {
 		case "right":
+			x += 38;
+			y += 19;
 			this.setVelX(speed);
 			break;
 		case "left":
+			y += 13;
 			this.setVelX(-speed);
 			break;
 		case "up":
+			y += 32;
+			x += 14;
 			this.setVelY(speed);
 			break;
 		case "down":
+			//y += 32;
+			x += 20;
 			this.setVelY(-speed);
 			break;
 		}
@@ -61,25 +66,25 @@ public class Bullet extends GameObject implements Serializable {
 	public void render(Graphics g) {
 		if (onState()){
 			g.setColor(Color.white);
-			if (isSlug){
-				g.fillRect((int)x, (int)y, 2, 2);		
+			if(isSlug){
+				g.setColor(Color.RED);
+				g.fillRect((int)x, (int)y, 10, 10);		
 			}
 			g.fillRect((int)x, (int)y, 5, 5);
 		}
-		
 	}
+	
 	public void update(Vector<GameObject> objects) {
 		x += velX;
 		y += velY;
-		if (Math.abs(x - originX) > 1000 || Math.abs(y - originY) > 1000){
+		if(Math.abs(x - originX) > 1000 || Math.abs(y - originY) > 1000) {
 			this.turnOff();
 		}
 		Collision(objects);
 	}
 	public Rectangle getBounds() {
 		return new Rectangle((int)x, (int)y, 5, 5);
-	}
-	
+	}	
 	
 	private void Collision(Vector<GameObject> objects) {
 		for(Iterator<GameObject> iterator = objects.iterator(); iterator.hasNext();) {

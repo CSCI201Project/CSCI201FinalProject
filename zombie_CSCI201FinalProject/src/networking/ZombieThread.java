@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import characters.AIChar;
-import characters.PlayerChar;
 import project2.GameObject;
 
 public class ZombieThread extends Thread {
@@ -30,6 +29,9 @@ public class ZombieThread extends Thread {
 		}
 	}
 	
+	public String getIP() {
+		return s.getInetAddress().toString();
+	}
 	public void setPlayerName(String pn) {
 		this.playerName = pn;
 	}
@@ -59,10 +61,24 @@ public class ZombieThread extends Thread {
 			e.printStackTrace();
 		}
 	}
+	public void refreshScreen() {
+		try {
+			oos.writeObject(new String("REFRESHSCREEN"));
+			oos.flush();
+		}
+		catch(IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
 	public void sendUpdatedZombie(GameObject g) {
 		try {
 			AIChar ai = (AIChar) g;
-			oos.writeObject(new ServerZombieObject(g.getX(), g.getY(), ai.getHealth(), g.iterator));
+			
+			ServerZombieObject szo = new ServerZombieObject(g.getX(), g.getY(), ai.getHealth(), g.iterator);
+			szo.setVelX(g.getVelX());
+			szo.setVelY(g.getVelY());
+			
+			oos.writeObject(szo);
 			oos.flush();
 		}
 		catch(IOException ioe) {
@@ -72,6 +88,16 @@ public class ZombieThread extends Thread {
 	public void sendUpdatedBullets(ServerBulletList sbl) {
 		try {			
 			oos.writeObject(sbl);
+			oos.flush();
+		}
+		catch(IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+	
+	public void handleMessage(ServerChatMessage scm) {
+		try {
+			oos.writeObject(scm);
 			oos.flush();
 		}
 		catch(IOException ioe) {
