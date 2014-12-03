@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import networking.ChatClient;
+
 import networking.ZombieGameClient;
 import networking.ZombieGameServer;
 
@@ -118,6 +120,7 @@ public class ConnectScreen extends JFrame {
 				
 				//start server
 				ZombieGameServer zgs = new ZombieGameServer(Integer.parseInt(portTextField.getText()));
+				ChatClient chatPanel = new ChatClient("localhost", 5555);
 				//set name
 				String pn = playerNameTextField.getText();
 				if(!pn.equals(""))
@@ -156,6 +159,7 @@ public class ConnectScreen extends JFrame {
 				
 				//start client
 				ZombieGameClient zgc = new ZombieGameClient(ipAddress, port);
+				ChatClient chatPanel = new ChatClient(ipAddress, 5555);
 				zgc.setFrame(frame);
 				//setname
 				String pn = playerNameTextField.getText();
